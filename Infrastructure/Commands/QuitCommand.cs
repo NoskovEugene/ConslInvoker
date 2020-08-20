@@ -1,8 +1,10 @@
 using Models;
 using System;
 using System.Reflection;
+using Infrastructure.Attributes;
 namespace Infrastructure.Commands
 {
+    [CommandInfo("Quit")]
     public class QuitCommand : ICommand
     {
         public string Command => "quit";

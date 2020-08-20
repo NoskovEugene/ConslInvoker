@@ -2,23 +2,25 @@
 using Models;
 using Infrastructure;
 using Infrastructure.Commands;
-using Core;
 using StructureMap;
+using System.Threading;
+using System.Diagnostics;
+using Core;
+using Core.Managers;
+
 namespace ConsoleInvoker
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            var core = new InvokerCore();
-            core.Services.Configure(configure=>
-            {
-                configure.For<ICommand>().Use<QuitCommand>().Named("quit");
-            });
-            var command = core.Services.TryGetInstance<ICommand>("quit");
-            Console.WriteLine(command.Command);
+            InvokerCore core = new InvokerCore();
+            var manager = core.Services.GetInstance<ICommandManager>();
+            manager.RegistryNewCommandUseAttribute<QuitCommand>();
             Console.ReadKey();
-            
         }
+
+
     }
 }
