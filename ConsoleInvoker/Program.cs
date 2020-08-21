@@ -18,6 +18,8 @@ namespace ConsoleInvoker
             InvokerCore core = new InvokerCore();
             var manager = core.Services.GetInstance<ICommandManager>();
             manager.RegistryNewCommandUseAttribute<QuitCommand>();
+            var command = manager.GetCommand<QuitCommand>();
+            Console.WriteLine(command.Description);
             Console.ReadKey();
         }
 

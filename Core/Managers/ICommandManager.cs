@@ -11,6 +11,10 @@ namespace Core.Managers
 
         ICommand GetCommand(string name);
 
+        ICommand GetCommand<T>(string name);
+
+        ICommand GetCommand<T>();
+
         bool TryFoundCommand(string name, out ICommand command);
     }
 }

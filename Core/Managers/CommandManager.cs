@@ -43,6 +43,17 @@ namespace Core.Managers
             return Services.GetInstance<ICommand>(name);
         }
 
+        public ICommand GetCommand<T>(string name)
+        {
+            return (ICommand)Services.GetInstance<T>(name);
+        }
+
+        public ICommand GetCommand<T>()
+        {
+            return (ICommand)Services.GetInstance<T>();
+        }
+
+
         public bool TryFoundCommand(string name, out ICommand command)
         {
             command = null;
