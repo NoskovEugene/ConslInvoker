@@ -1,15 +1,20 @@
 using System;
+
+using StructureMap;
+
+using NLog;
+
+using Core.Managers;
 using Models;
 using Infrastructure;
 using Infrastructure.Commands;
-using StructureMap;
-using Core.Managers;
+
 
 namespace Core
 {
     public class InvokerCore
     {
-
+        public ILogger Logger { get; }
 
         public Container Services { get; }
 
@@ -19,10 +24,12 @@ namespace Core
 
         public InvokerCore()
         {
+            Logger = LogManager.GetLogger("console");
             Services = new Container();
             Services.Configure(x =>
             {
                 x.For<Container>().Singleton().Add(Services);
+                x.For<ILogger>().Singleton().Add(Logger);
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();
                 x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
             });

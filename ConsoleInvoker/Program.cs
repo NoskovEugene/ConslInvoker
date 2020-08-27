@@ -11,6 +11,8 @@ using Models;
 
 using Infrastructure.Commands;
 
+using NLog;
+
 namespace ConsoleInvoker
 {
     class Program
@@ -22,6 +24,8 @@ namespace ConsoleInvoker
             var manager = core.Services.GetInstance<ICommandManager>();
             manager.RegistryCommandUseAttribute<QuitCommand>();
             var command = core.Services.GetInstance<ICommand>("Quit");
+            var logger = core.Services.GetInstance<ILogger>();
+            logger.Fatal("Fatal");
             Console.WriteLine(command.Description);
             Console.ReadKey();
         }
