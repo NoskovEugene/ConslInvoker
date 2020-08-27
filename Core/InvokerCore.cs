@@ -10,19 +10,24 @@ namespace Core
     public class InvokerCore
     {
 
-        public Container Services {get;}
 
-        public CommandManager CommandManager{get;private set;}
+        public Container Services { get; }
+
+        public ICommandManager CommandManager { get; }
+
+        public IAnalyzerManager Analyzermanager { get; }
 
         public InvokerCore()
         {
             Services = new Container();
-            CommandManager = new CommandManager(Services);
-            Services.Configure(x=>{
-                x.For<ICommandManager>().Singleton().Add<CommandManager>(CommandManager);
+            Services.Configure(x =>
+            {
+                x.For<Container>().Singleton().Add(Services);
+                x.For<ICommandManager>().Singleton().Use<CommandManager>();
+                x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
             });
+            CommandManager = Services.GetInstance<ICommandManager>();
+            Analyzermanager = Services.GetInstance<IAnalyzerManager>();
         }
-
-
     }
 }

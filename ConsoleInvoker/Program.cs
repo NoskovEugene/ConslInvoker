@@ -1,12 +1,15 @@
 ﻿using System;
-using Models;
-using Infrastructure;
-using Infrastructure.Commands;
-using StructureMap;
 using System.Threading;
 using System.Diagnostics;
+
+using StructureMap;
+
 using Core;
 using Core.Managers;
+
+using Models;
+
+using Infrastructure.Commands;
 
 namespace ConsoleInvoker
 {
@@ -17,12 +20,10 @@ namespace ConsoleInvoker
         {
             InvokerCore core = new InvokerCore();
             var manager = core.Services.GetInstance<ICommandManager>();
-            manager.RegistryNewCommandUseAttribute<QuitCommand>();
-            var command = manager.GetCommand<QuitCommand>();
+            manager.RegistryCommandUseAttribute<QuitCommand>();
+            var command = core.Services.GetInstance<ICommand>("Quit");
             Console.WriteLine(command.Description);
             Console.ReadKey();
         }
-
-
     }
 }

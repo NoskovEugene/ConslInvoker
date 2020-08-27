@@ -3,10 +3,10 @@ namespace Core.Managers
 {
     public interface ICommandManager
     {
-        void RegistryNewCommand<CommandType>()
+        void RegistryCommand<CommandType>()
             where CommandType : ICommand;
 
-        void RegistryNewCommandUseAttribute<CommandType>()
+        void RegistryCommandUseAttribute<CommandType>()
             where CommandType : ICommand;
 
         ICommand GetCommand(string name);

@@ -18,14 +18,14 @@ namespace Core.Managers
             Services = services;
         }
 
-        public void RegistryNewCommand<CommandType>()
+        public void RegistryCommand<CommandType>()
             where CommandType : ICommand
         {
             var name = typeof(CommandType).Name.Replace("Command",string.Empty);
             RegistryCommand<CommandType>(name);
         }
 
-        public void RegistryNewCommandUseAttribute<CommandType>()
+        public void RegistryCommandUseAttribute<CommandType>()
             where CommandType : ICommand
         {
             var type = typeof(CommandType);
