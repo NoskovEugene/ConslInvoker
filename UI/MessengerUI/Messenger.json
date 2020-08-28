@@ -1,0 +1,19 @@
+{
+    "pattern": "${hello world}",
+    "FatalProfile": {
+      "ForegroundColor": 5,
+      "BackgroundColor": 0
+    },
+    "ErrorProfile": {
+      "ForegroundColor": 10,
+      "BackgroundColor": 0
+    },
+    "WarnProfile": {
+      "ForegroundColor": 12,
+      "BackgroundColor": 0
+    },
+    "InfoProfile": {
+      "ForegroundColor": 2,
+      "BackgroundColor": 0
+    }
+  }

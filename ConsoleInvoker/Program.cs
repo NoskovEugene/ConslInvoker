@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Threading;
-using System.Diagnostics;
-
-using StructureMap;
 
 using Core;
 using Core.Managers;
@@ -12,6 +8,9 @@ using Models;
 using Infrastructure.Commands;
 
 using NLog;
+
+using Newtonsoft.Json;
+
 
 namespace ConsoleInvoker
 {
