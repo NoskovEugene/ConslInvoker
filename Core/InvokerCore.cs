@@ -9,11 +9,15 @@ using Models;
 using Infrastructure;
 using Infrastructure.Commands;
 
+using Microsoft.Extensions.Configuration;
+
 
 namespace Core
 {
     public class InvokerCore
     {
+        public IConfiguration Configuration { get; }
+
         public ILogger Logger { get; }
 
         public Container Services { get; }
@@ -24,6 +28,8 @@ namespace Core
 
         public InvokerCore()
         {
+            Configuration = CreateConfiguration();
+            
             Logger = LogManager.GetLogger("console");
             Services = new Container();
             Services.Configure(x =>
@@ -36,5 +42,13 @@ namespace Core
             CommandManager = Services.GetInstance<ICommandManager>();
             Analyzermanager = Services.GetInstance<IAnalyzerManager>();
         }
+
+        public IConfiguration CreateConfiguration()
+        {
+            var config = new ConfigurationBuilder();
+            config.AddJsonFile("appsettings.json");
+            return config.Build();
+        }
+
     }
 }

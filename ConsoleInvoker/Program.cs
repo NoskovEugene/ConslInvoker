@@ -20,12 +20,9 @@ namespace ConsoleInvoker
         static void Main(string[] args)
         {
             InvokerCore core = new InvokerCore();
-            var manager = core.Services.GetInstance<ICommandManager>();
-            manager.RegistryCommandUseAttribute<QuitCommand>();
-            var command = core.Services.GetInstance<ICommand>("Quit");
-            var logger = core.Services.GetInstance<ILogger>();
-            logger.Fatal("Fatal");
-            Console.WriteLine(command.Description);
+            var color = Console.ReadLine();
+            Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor),color);
+            Console.WriteLine(color);
             Console.ReadKey();
         }
     }

@@ -1,3 +1,4 @@
+using System.ComponentModel;
 namespace UI.MessengerUI.Configurations
 {
     public class Configuration

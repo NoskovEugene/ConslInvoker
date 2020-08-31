@@ -7,9 +7,15 @@
   <ItemGroup>
     <PackageReference Include="structuremap" Version="4.7.1"/>
     <PackageReference Include="NLog" Version="4.7.4"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="3.1.7"/>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="3.1.7"/>
+    <PackageReference Include="NLog.Extensions.Logging" Version="1.6.5"/>
   </ItemGroup>
   <ItemGroup>
     <Content Include="nlog.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="appSettings.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

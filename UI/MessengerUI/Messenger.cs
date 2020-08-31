@@ -8,6 +8,12 @@ namespace UI.MessengerUI
     {
         protected Configuration Configuration { get; set; }
 
+        public Messenger(Configuration config)
+        {
+            this.Configuration = config;
+        }
+
+
         public void Info(string message)
         {
             ShowMessage(Configuration.InfoProfile.ForegroundColor,
