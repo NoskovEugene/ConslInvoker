@@ -58,5 +58,8 @@ namespace Core
             config.AddJsonFile("appsettings.json");
             return config.Build();
         }
+
+        
+
     }
 }
