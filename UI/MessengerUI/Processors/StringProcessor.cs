@@ -1,25 +1,17 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
+using UI.MessengerUI.Enums;
 namespace UI.MessengerUI.Processors
 {
-    public class StringProcessor : IStringProcessor
+    public static class StringProcessor
     {
-        public Dictionary<string, Func<string, string>> Expressions { get; set; } = new Dictionary<string, Func<string, string>>
+        public static string Expand(string pattern, string message, MessengerType messengerType)
         {
-            {"$\"{message}\"",(message) => message }
-        };
-
-        public string Replace(string pattern, string message)
-        {
-            foreach (var item in Expressions)
-            {
-                if (pattern.Contains(item.Key))
-                {
-                    pattern = pattern.Replace(item.Key, item.Value(message));
-                }
-            }
+            pattern = pattern.Replace("${message}", message)
+                             .Replace("${messagetype}", messengerType.ToString().ToUpper())
+                             .Replace("${shortdate}", DateTime.Now.ToString("dd:MM:yyyy"))
+                             .Replace("${date}", DateTime.Now.ToString());
             return pattern;
         }
     }

@@ -7,10 +7,8 @@ namespace UI.MessengerUI.Configurations
 {
     public class Profile
     {
-        [DefaultValue(ConsoleColor.White)]
-        public ConsoleColor ForegroundColor { get; set; }
+        public ConsoleColor ForegroundColor { get; set; } = ConsoleColor.White;
 
-        [DefaultValue(ConsoleColor.Black)]
-        public ConsoleColor BackgroundColor { get; set; }
+        public ConsoleColor BackgroundColor { get; set; } = ConsoleColor.Black;
     }
 }

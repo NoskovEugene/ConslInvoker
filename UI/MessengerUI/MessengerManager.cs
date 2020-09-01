@@ -5,26 +5,22 @@ using UI.MessengerUI.Configurations;
 
 namespace UI.MessengerUI
 {
-    public class MessengerManager
+    public static class MessengerManager
     {
-        public Configuration Configuration { get; private set; }
+        private static Configuration Configuration;
 
-        public void SetConfiguration(Configuration configuration)
+        public static void SetConfiguration(Configuration configuration)
         {
             Configuration = configuration;
         }
 
-        public void SetConfiguration(IConfigurationSection section)
+        public static void SetConfiguration(IConfigurationSection section)
         {
-            
+            var config = ConfigurationConverter.Convert(section);
+            Configuration = config;
         }
 
-        public void SetConfigurationFromNLog(IConfigurationSection section)
-        {
-
-        }
-
-        public IMessenger GetMessenger()
+        public static IMessenger GetMessenger()
         {
             return new Messenger(Configuration);
         }

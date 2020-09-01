@@ -1,4 +1,6 @@
-﻿using System;
+﻿using System.Runtime.InteropServices;
+using System.Diagnostics;
+using System;
 
 using Core;
 using Core.Managers;
@@ -10,7 +12,9 @@ using Infrastructure.Commands;
 using NLog;
 
 using Newtonsoft.Json;
-
+using System.ComponentModel;
+using System.Threading.Tasks;
+using UI.MessengerUI;
 
 namespace ConsoleInvoker
 {
@@ -19,10 +23,12 @@ namespace ConsoleInvoker
 
         static void Main(string[] args)
         {
-            InvokerCore core = new InvokerCore();
-            var color = Console.ReadLine();
-            Console.ForegroundColor = (ConsoleColor)Enum.Parse(typeof(ConsoleColor),color);
-            Console.WriteLine(color);
+            var core = new InvokerCore();
+            var messenger = core.Services.GetInstance<IMessenger>();
+            messenger.Info("Info");
+            messenger.Warn("Warn");
+            messenger.Error("Error");
+            messenger.Fatal("Fatal");
             Console.ReadKey();
         }
     }
