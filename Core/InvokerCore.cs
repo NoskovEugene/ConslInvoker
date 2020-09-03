@@ -6,6 +6,7 @@ using NLog;
 using NLog.Extensions;
 using NLog.Extensions.Logging;
 
+using Core.Buses;
 using Core.Managers;
 using Models;
 using Infrastructure;
@@ -40,6 +41,7 @@ namespace Core
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();
                 x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
                 x.For<IMessenger>().Add(MessengerManager.GetMessenger());
+                x.For<ICommandBus>().Use<CommandBus>();
             });
             CommandManager = Services.GetInstance<ICommandManager>();
             Analyzermanager = Services.GetInstance<IAnalyzerManager>();
