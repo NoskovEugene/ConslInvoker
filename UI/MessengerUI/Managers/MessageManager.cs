@@ -50,7 +50,7 @@ namespace UI.MessengerUI.Managers
                 var profile = Dict[message.MessageType];
                 Console.ForegroundColor = profile.ForegroundColor;
                 Console.BackgroundColor = profile.BackgroundColor;
-                Console.WriteLine(message);
+                Console.WriteLine(message.Message);
                 Console.ForegroundColor = foregroundGlass;
                 Console.BackgroundColor = backgroundGlass;
             }

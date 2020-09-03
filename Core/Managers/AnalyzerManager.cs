@@ -7,6 +7,7 @@ using Core;
 using Core.Analyzers;
 
 using Models;
+using UI.MessengerUI;
 
 namespace Core.Managers
 {
@@ -15,22 +16,32 @@ namespace Core.Managers
 
         protected Container Services { get; set; }
 
-        public AnalyzerManager(Container services)
+        protected IMessenger Messenger { get; set; }
+
+        public AnalyzerManager(Container services, IMessenger messenger)
         {
-            this.Services = services;
+            Services = services;
+            Messenger = messenger;
         }
 
-        public IAnalyzer ParentAnalyzer { get; set; }
+        public IAnalyzer RootAnalyzer { get; set; }
 
         public void AddAnalyzer<T>()
+            where T : IAnalyzer
         {
-            var analyzer = ParentAnalyzer;
-            var nextAnalyzer = ParentAnalyzer.NextAnalyzer;
+            if (RootAnalyzer == null)
+            {
+                RootAnalyzer = Activator.CreateInstance<T>();
+                return;
+            }
+
+            var analyzer = RootAnalyzer;
+            var nextAnalyzer = RootAnalyzer.NextAnalyzer;
             while (true)
             {
                 if (nextAnalyzer == null)
                 {
-                    var instanse = (IAnalyzer)Activator.CreateInstance(typeof(T));
+                    var instanse = Activator.CreateInstance<T>();
                     analyzer.NextAnalyzer = instanse;
                     break;
                 }
@@ -44,7 +55,7 @@ namespace Core.Managers
 
         public void RemoveLastAnalyzer()
         {
-            var analyzer = ParentAnalyzer.NextAnalyzer;
+            var analyzer = RootAnalyzer.NextAnalyzer;
             var nextAnalyzer = analyzer.NextAnalyzer;
             while (true)
             {
@@ -67,7 +78,17 @@ namespace Core.Managers
             {
                 UnparsedString = line
             };
-            return ParentAnalyzer.Analyze(package);
+
+            try
+            {
+                package = RootAnalyzer.Analyze(package);
+            }
+            catch(Exception ex)
+            {
+                Messenger.Fatal("Unhandled fatal error during analysis phase");
+                Messenger.Trace(ex.Message);
+            }
+            return RootAnalyzer.Analyze(package);
         }
     }
 }

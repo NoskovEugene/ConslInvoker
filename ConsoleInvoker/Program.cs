@@ -25,12 +25,9 @@ namespace ConsoleInvoker
         static void Main(string[] args)
         {
             var core = new InvokerCore();
-            var messenger = core.Services.GetInstance<IMessenger>();
-            messenger.Trace("trace");
-            messenger.Info("info");
-            messenger.Warn("warn");
-            messenger.Error("error");
-            messenger.Fatal("fatal");
+            core.CommandManager.RegistryCommand<QuitCommand>();
+            core.StartListen();
+            
             Console.ReadKey();
         }
     }
