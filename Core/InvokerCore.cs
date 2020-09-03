@@ -51,7 +51,6 @@ namespace Core
         {
             LogManager.Configuration = new NLogLoggingConfiguration(Configuration.GetSection("NLog"));
             MessengerManager.SetConfiguration(Configuration.GetSection("Messenger"));
-
         }
 
         protected IConfiguration CreateConfiguration()
