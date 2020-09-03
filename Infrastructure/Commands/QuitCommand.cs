@@ -1,3 +1,4 @@
+using System.Threading;
 using Models;
 using System;
 using System.Reflection;
@@ -5,7 +6,7 @@ using Infrastructure.Attributes;
 using UI.MessengerUI;
 namespace Infrastructure.Commands
 {
-    [CommandInfo("Quit")]
+    [CommandInfo("quit")]
     public class QuitCommand : ICommand
     {
         protected IMessenger Messenger { get; }
@@ -21,9 +22,10 @@ namespace Infrastructure.Commands
 
         public void Execute(Package package)
         {
-            for(int i = 5; i>= 0;i++)
+            for(int i = 5; i>= 0;i--)
             {
-                Messenger.Info($"Program will be closed in {i} second");
+                Messenger.Info($"Program will be closed in {i} second...");
+                Thread.Sleep(1000);
             }
             Environment.Exit(0);
         }

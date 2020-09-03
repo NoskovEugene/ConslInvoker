@@ -7,6 +7,7 @@ using Core;
 using Core.Analyzers;
 
 using Models;
+using UI.MessengerUI;
 
 namespace Core.Managers
 {
@@ -15,9 +16,12 @@ namespace Core.Managers
 
         protected Container Services { get; set; }
 
-        public AnalyzerManager(Container services)
+        protected IMessenger Messenger { get; set; }
+
+        public AnalyzerManager(Container services, IMessenger messenger)
         {
             Services = services;
+            Messenger = messenger;
         }
 
         public IAnalyzer RootAnalyzer { get; set; }
@@ -25,7 +29,7 @@ namespace Core.Managers
         public void AddAnalyzer<T>()
             where T : IAnalyzer
         {
-            if(RootAnalyzer == null)
+            if (RootAnalyzer == null)
             {
                 RootAnalyzer = Activator.CreateInstance<T>();
                 return;
@@ -74,6 +78,16 @@ namespace Core.Managers
             {
                 UnparsedString = line
             };
+
+            try
+            {
+                package = RootAnalyzer.Analyze(package);
+            }
+            catch(Exception ex)
+            {
+                Messenger.Fatal("Unhandled fatal error during analysis phase");
+                Messenger.Trace(ex.Message);
+            }
             return RootAnalyzer.Analyze(package);
         }
     }
