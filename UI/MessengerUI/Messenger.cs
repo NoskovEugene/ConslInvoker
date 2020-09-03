@@ -3,6 +3,7 @@ using System;
 using UI.MessengerUI.Configurations;
 using UI.MessengerUI.Processors;
 using UI.MessengerUI.Enums;
+using UI.MessengerUI.Managers;
 
 namespace UI.MessengerUI
 {
@@ -10,58 +11,37 @@ namespace UI.MessengerUI
     {
         protected Configuration Configuration { get; set; }
 
-        public Messenger(Configuration config)
+        protected IMessageManager MessageManager { get; set; }
+
+        public Messenger(Configuration config, IMessageManager messageManager)
         {
             this.Configuration = config;
+            this.MessageManager = messageManager;
         }
 
+        public void Trace(string message)
+        {
+            MessageManager.Add(message,MessageType.Trace);
+        }
 
         public void Info(string message)
         {
-            message = ConvertToPattern(message, MessengerType.Info);
-            ShowMessage(Configuration.InfoProfile.ForegroundColor,
-                        Configuration.InfoProfile.BackgroundColor,
-                        message);
+            MessageManager.Add(message,MessageType.Info);
         }
 
         public void Warn(string message)
         {
-            message = ConvertToPattern(message, MessengerType.Warn);
-            ShowMessage(Configuration.WarnProfile.ForegroundColor,
-                        Configuration.WarnProfile.BackgroundColor,
-                        message);
+            MessageManager.Add(message,MessageType.Warn);
         }
 
         public void Error(string message)
         {
-            message = ConvertToPattern(message, MessengerType.Error);
-            ShowMessage(Configuration.ErrorProfile.ForegroundColor,
-                        Configuration.ErrorProfile.BackgroundColor,
-                        message);
+            MessageManager.Add(message,MessageType.Error);
         }
 
         public void Fatal(string message)
         {
-            message = ConvertToPattern(message, MessengerType.Fatal);
-            ShowMessage(Configuration.FatalProfile.ForegroundColor,
-                        Configuration.FatalProfile.BackgroundColor,
-                        message);
-        }
-
-        private string ConvertToPattern(string message, MessengerType type)
-        {
-            return StringProcessor.Expand(Configuration.Pattern, message, type);
-        }
-
-        private void ShowMessage(ConsoleColor foreground, ConsoleColor background, string message)
-        {
-            var foregroundGlass = Console.ForegroundColor;
-            var backgroundGlass = Console.BackgroundColor;
-            Console.ForegroundColor = foreground;
-            Console.BackgroundColor = background;
-            Console.WriteLine(message);
-            Console.ForegroundColor = foregroundGlass;
-            Console.BackgroundColor = backgroundGlass;
+            MessageManager.Add(message,MessageType.Fatal);
         }
     }
 }

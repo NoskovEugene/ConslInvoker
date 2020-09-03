@@ -1,4 +1,5 @@
-﻿using System.Runtime.InteropServices;
+﻿using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using System.Diagnostics;
 using System;
 
@@ -24,6 +25,12 @@ namespace ConsoleInvoker
         static void Main(string[] args)
         {
             var core = new InvokerCore();
+            var messenger = core.Services.GetInstance<IMessenger>();
+            messenger.Trace("trace");
+            messenger.Info("info");
+            messenger.Warn("warn");
+            messenger.Error("error");
+            messenger.Fatal("fatal");
             Console.ReadKey();
         }
     }
