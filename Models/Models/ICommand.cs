@@ -1,3 +1,4 @@
+
 namespace Models
 {
     public interface ICommand
@@ -6,7 +7,7 @@ namespace Models
 
         string Description {get;}
 
-        void Execute();
+        void Execute(Package package);
 
     }
 }

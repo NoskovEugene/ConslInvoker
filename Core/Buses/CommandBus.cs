@@ -22,12 +22,16 @@ namespace Core.Buses
 
         public void Execute(string line)
         {
-            Messenger.Info($"Input string {line}");
+            Messenger.Trace($"Input string {line}");
             var package = AnalyzerManager.Analyze(line);
-            Messenger.Info("Trying find command");
+            Messenger.Trace("Trying find command");
             if(CommandManager.TryFoundCommand(package.Command,out var command))
             {
-                command.Execute();
+                command.Execute(package);
+            }
+            else
+            {
+                Messenger.Fatal("Command not found");
             }
         }
     }
