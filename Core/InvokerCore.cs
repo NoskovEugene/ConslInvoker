@@ -6,7 +6,9 @@ using NLog;
 using NLog.Extensions;
 using NLog.Extensions.Logging;
 
+using Core.Buses;
 using Core.Managers;
+using Core.Analyzers;
 using Models;
 using Infrastructure;
 using Infrastructure.Commands;
@@ -36,13 +38,16 @@ namespace Core
             Services = new Container();
             Services.Configure(x =>
             {
+                
                 x.For<Container>().Singleton().Add(Services);
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();
                 x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
                 x.For<IMessenger>().Add(MessengerManager.GetMessenger());
+                x.For<ICommandBus>().Use<CommandBus>();
             });
             CommandManager = Services.GetInstance<ICommandManager>();
             Analyzermanager = Services.GetInstance<IAnalyzerManager>();
+            Analyzermanager.AddAnalyzer<Analyzer>();
         }
 
         protected void InitLoggers()
@@ -58,7 +63,15 @@ namespace Core
             return config.Build();
         }
 
-        
-
+        public void StartListen()
+        {
+            var mainBus = Services.GetInstance<ICommandBus>();
+            while(true)
+            {
+                Console.Write(">_ ");
+                var line = Console.ReadLine();
+                mainBus.Execute(line);
+            }
+        }
     }
 }

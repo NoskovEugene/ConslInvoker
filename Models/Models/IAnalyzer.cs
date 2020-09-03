@@ -1,6 +1,4 @@
-using Models;
-
-namespace Core.Analyzers
+namespace Models
 {
     public interface IAnalyzer
     {

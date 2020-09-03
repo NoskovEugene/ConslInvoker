@@ -4,7 +4,8 @@ namespace Core.Managers
 {
     public interface IAnalyzerManager
     {
-        void AddAnalyzer<T>();
+        void AddAnalyzer<T>()
+        where T : IAnalyzer;
 
         void RemoveLastAnalyzer();
 
