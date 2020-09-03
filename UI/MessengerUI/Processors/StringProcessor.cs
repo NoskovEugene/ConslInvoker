@@ -6,7 +6,7 @@ namespace UI.MessengerUI.Processors
 {
     public static class StringProcessor
     {
-        public static string Expand(string pattern, string message, MessengerType messengerType)
+        public static string Expand(string pattern, string message, MessageType messengerType)
         {
             pattern = pattern.Replace("${message}", message)
                              .Replace("${messagetype}", messengerType.ToString().ToUpper())

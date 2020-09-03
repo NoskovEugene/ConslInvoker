@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Collections.Generic;
 using System.Linq;
 using System;
@@ -17,10 +18,36 @@ namespace UI.MessengerUI.Configurations
             var pattern = section["Pattern"];
             if (pattern == "" || pattern == string.Empty)
             {
-                pattern = "$\"message\"";
+                pattern = "${message}";
             }
             configuration.Pattern = pattern;
+            GetMinLevel(section, ref configuration);
             return InitProfiles(section,ref configuration);
+        }
+
+
+        private static void GetMinLevel(IConfigurationSection configurationSection, ref Configuration configuration)
+        {
+            var minLevel = configurationSection["minLevel"];
+            var prop = configuration.GetType().GetProperties().Where(x=> x.Name == nameof(Configuration.MinLevel)).First();
+            if(int.TryParse(minLevel, out var intMinLevel))
+            {
+                if(intMinLevel > 0 && intMinLevel < 6)
+                {
+                    prop.SetValue(configuration,intMinLevel);
+                }
+                else{
+                    configuration.MinLevel = Enums.MessageType.Info;
+                }
+            }
+            else
+            {
+                var levels = ((IEnumerable<Enums.MessageType>)Enum.GetValues(typeof(Enums.MessageType))).Where(x => x.ToString().Equals(minLevel, StringComparison.OrdinalIgnoreCase));
+                if(levels.Count() > 0)
+                {
+                    prop.SetValue(configuration, levels.First());
+                }
+            }
         }
 
         private static Configuration InitProfiles(IConfigurationSection configurationSection,ref Configuration configuration)
