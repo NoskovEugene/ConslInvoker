@@ -27,6 +27,7 @@ namespace Core
         /// <value></value>
         public IConfiguration Configuration { get; }
 
+
         /// <summary>
         /// Контейнер приложения
         /// </summary>
@@ -38,12 +39,6 @@ namespace Core
         /// </summary>
         /// <value></value>
         public ICommandManager CommandManager { get; }
-
-        /// <summary>
-        /// Менеджер анализаторов
-        /// </summary>
-        /// <value></value>
-        public IAnalyzerManager Analyzermanager { get; }
 
         public InvokerCore()
         {
@@ -60,8 +55,8 @@ namespace Core
                 x.For<ICommandBus>().Use<CommandBus>();
             });
             CommandManager = Services.GetInstance<ICommandManager>();
-            Analyzermanager = Services.GetInstance<IAnalyzerManager>();
-            Analyzermanager.AddAnalyzer<Analyzer>();
+            var analyzermanager = Services.GetInstance<IAnalyzerManager>();
+            analyzermanager.AddAnalyzer<Analyzer>();
         }
 
         protected void InitLoggers()
