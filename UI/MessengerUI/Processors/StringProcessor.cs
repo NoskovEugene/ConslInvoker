@@ -6,6 +6,7 @@ namespace UI.MessengerUI.Processors
 {
     public static class StringProcessor
     {
+
         public static string Expand(string pattern, string message, MessageType messengerType)
         {
             pattern = pattern.Replace("${message}", message)
@@ -14,6 +15,11 @@ namespace UI.MessengerUI.Processors
                              .Replace("${date}", DateTime.Now.ToString())
                              .Replace("${time}", DateTime.Now.ToString("HH:mm:ss"));
             return pattern;
+        }
+
+        public static string[] ExpandNewLine(string message)
+        {
+            return message.Split(new char[] {'\r','\n'},StringSplitOptions.RemoveEmptyEntries);
         }
     }
 }

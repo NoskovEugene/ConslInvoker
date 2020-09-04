@@ -26,9 +26,8 @@ namespace ConsoleInvoker
         {
             var core = new InvokerCore();
             core.CommandManager.RegistryCommandUseAttribute<QuitCommand>();
-            var messenger = core.Services.GetInstance<IMessenger>();
+            core.CommandManager.RegistryCommandUseAttribute<MessengerTestCommand>();
             core.StartListen();
-            
             Console.ReadKey();
         }
     }

@@ -1,3 +1,4 @@
+using System.Linq;
 using System;
 using System.Collections.Generic;
 using UI.MessengerUI.InternalModels;
@@ -29,7 +30,6 @@ namespace UI.MessengerUI.Managers
 
         public void Add(MessageEvent message)
         {
-            message.Message = StringProcessor.Expand(Configuration.Pattern, message.Message, message.MessageType);
             MainQueue.Enqueue(message);
             ShowMessage();
         }
@@ -41,16 +41,18 @@ namespace UI.MessengerUI.Managers
 
         void ShowMessage()
         {
-            var message = MainQueue.Peek();
+            var messageEvent = MainQueue.Peek();
             MainQueue.Dequeue();
-            if (message.MessageType >= Configuration.MinLevel)
+            if (messageEvent.MessageType >= Configuration.MinLevel)
             {
                 var foregroundGlass = Console.ForegroundColor;
                 var backgroundGlass = Console.BackgroundColor;
-                var profile = Dict[message.MessageType];
+                var profile = Dict[messageEvent.MessageType];
+                var messageArray = StringProcessor.ExpandNewLine(messageEvent.Message)
+                                   .Select(x=> StringProcessor.Expand(Configuration.Pattern,x,messageEvent.MessageType)).ToArray();
                 Console.ForegroundColor = profile.ForegroundColor;
                 Console.BackgroundColor = profile.BackgroundColor;
-                Console.WriteLine(message.Message);
+                Array.ForEach(messageArray, x=> Console.WriteLine(x));
                 Console.ForegroundColor = foregroundGlass;
                 Console.BackgroundColor = backgroundGlass;
             }
