@@ -26,6 +26,7 @@ namespace Core.Buses
         {
             Messenger.Trace($"Input string '{line}'");
             var package = AnalyzerManager.Analyze(line);
+            if(package.ExistException) {Messenger.Trace("ExistException now true. Exit."); return;}
             Messenger.Trace($"Trying find command {package.Command}");
             if(CommandManager.TryFoundCommand(package.Command,out var command))
             {
