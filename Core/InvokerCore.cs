@@ -40,6 +40,8 @@ namespace Core
         /// <value></value>
         public ICommandManager CommandManager { get; }
 
+        
+
         public InvokerCore()
         {
             Configuration = CreateConfiguration();
@@ -47,7 +49,7 @@ namespace Core
             Services = new Container();
             Services.Configure(x =>
             {
-                
+                x.For<ILogger>().Add(LogManager.GetLogger("coloredConsole"));
                 x.For<Container>().Singleton().Add(Services);
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();
                 x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();

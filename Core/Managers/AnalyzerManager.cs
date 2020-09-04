@@ -105,7 +105,8 @@ namespace Core.Managers
                 Messenger.Fatal("Unhandled fatal error during analysis phase");
                 Messenger.Trace(ex.Message);
             }
-            return RootAnalyzer.Analyze(package);
+
+            return package;
         }
     }
 }
