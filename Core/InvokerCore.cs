@@ -21,14 +21,28 @@ namespace Core
 {
     public class InvokerCore
     {
+        /// <summary>
+        /// Конфигурация приложения
+        /// </summary>
+        /// <value></value>
         public IConfiguration Configuration { get; }
 
-        public IMessenger Messenger { get; }
-
+        /// <summary>
+        /// Контейнер приложения
+        /// </summary>
+        /// <value></value>
         public Container Services { get; }
 
+        /// <summary>
+        /// Менеджер команд
+        /// </summary>
+        /// <value></value>
         public ICommandManager CommandManager { get; }
 
+        /// <summary>
+        /// Менеджер анализаторов
+        /// </summary>
+        /// <value></value>
         public IAnalyzerManager Analyzermanager { get; }
 
         public InvokerCore()
@@ -63,6 +77,9 @@ namespace Core
             return config.Build();
         }
 
+        /// <summary>
+        /// Переводит ядро в режим ожидания
+        /// </summary>
         public void StartListen()
         {
             var mainBus = Services.GetInstance<ICommandBus>();
