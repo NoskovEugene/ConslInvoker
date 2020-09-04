@@ -1,27 +1,30 @@
+using System.Linq;
 using Core.Exceptions;
-using Infrastructure;
 using Infrastructure.Attributes;
 using Models;
 using StructureMap;
 using System;
-using System.Reflection;    
-
+using System.Reflection;
+using UI.MessengerUI;
 
 namespace Core.Managers
 {
     public class CommandManager : ICommandManager
     {
-        protected Container Services {get; set;}
+        protected Container Services { get; }
 
-        public CommandManager(Container services)
+        protected IMessenger Messenger { get; }
+
+        public CommandManager(Container services, IMessenger messenger)
         {
             Services = services;
+            this.Messenger = messenger;
         }
 
         public void RegistryCommand<CommandType>()
             where CommandType : ICommand
         {
-            var name = typeof(CommandType).Name.Replace("Command",string.Empty);
+            var name = typeof(CommandType).Name.Replace("Command", string.Empty);
             RegistryCommand<CommandType>(name);
         }
 
@@ -30,7 +33,7 @@ namespace Core.Managers
         {
             var type = typeof(CommandType);
             var attribute = type.GetCustomAttribute<CommandInfoAttribute>();
-            if(attribute == null)
+            if (attribute == null)
             {
                 throw new AttributeNotFoundException(nameof(CommandInfoAttribute));
             }
@@ -43,14 +46,10 @@ namespace Core.Managers
             return Services.GetInstance<ICommand>(name);
         }
 
-        public ICommand GetCommand<T>(string name)
-        {
-            return (ICommand)Services.GetInstance<T>(name);
-        }
 
-        public ICommand GetCommand<T>()
+        public ICommand GetCommand()
         {
-            return (ICommand)Services.GetInstance<T>();
+            return Services.GetInstance<ICommand>();
         }
 
 
@@ -58,23 +57,31 @@ namespace Core.Managers
         {
             command = null;
             var model = Services.Model;
-            foreach(var item in model.AllInstances)
+            var result = model.AllInstances.Where(x =>
+                x.Name.Equals(name, StringComparison.OrdinalIgnoreCase));
+            if (result.Count() > 0)
             {
-                if(item.Name.Equals(name, StringComparison.OrdinalIgnoreCase)){
-                    command = GetCommand(item.Name);
-                    return true;
-                }
+                command = GetCommand(result.First().Name);
+                return true;
             }
-            
             return false;
         }
 
         private void RegistryCommand<T>(string name)
             where T : ICommand
         {
-            Services.Configure(x=> {
-                x.For<ICommand>().Use<T>().Named(name);
-            });
+            if (!TryFoundCommand(name, out _))
+            {
+                Services.Configure(x =>
+                {
+                    x.For<ICommand>().Use<T>().Named(name);
+                });
+            }
+            else
+            {
+                Messenger.Trace($"Command '{name}' with type '{typeof(T).Name}' already exist in container. Command will be skipped");
+            }
+
         }
 
 

@@ -3,10 +3,22 @@ namespace Models
 {
     public interface ICommand
     {
-        string Command {get;}
+        /// <summary>
+        /// Строкое представление для вызова команды
+        /// </summary>
+        /// <value></value>
+        string Command { get; }
 
-        string Description {get;}
-
+        /// <summary>
+        /// Объяснение по использованию
+        /// </summary>
+        /// <value></value>
+        string Description { get; }
+        
+        /// <summary>
+        /// Запуск команды
+        /// </summary>
+        /// <param name="package"></param>
         void Execute(Package package);
 
     }

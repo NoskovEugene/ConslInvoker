@@ -12,7 +12,9 @@ namespace Core.Buses
 
         protected IMessenger Messenger { get; }
 
-        public CommandBus(ICommandManager commandManager, IAnalyzerManager analyzerManager, IMessenger messenger)
+        public CommandBus(ICommandManager commandManager,
+                          IAnalyzerManager analyzerManager,
+                          IMessenger messenger)
         {
             CommandManager = commandManager;
             AnalyzerManager = analyzerManager;
@@ -22,11 +24,12 @@ namespace Core.Buses
 
         public void Execute(string line)
         {
-            Messenger.Trace($"Input string {line}");
+            Messenger.Trace($"Input string '{line}'");
             var package = AnalyzerManager.Analyze(line);
-            Messenger.Trace("Trying find command");
+            Messenger.Trace($"Trying find command {package.Command}");
             if(CommandManager.TryFoundCommand(package.Command,out var command))
             {
+                Messenger.Trace($"Success. Finded '{command.GetType().Name}'");
                 command.Execute(package);
             }
             else
