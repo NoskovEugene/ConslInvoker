@@ -16,6 +16,7 @@ using Infrastructure.Commands;
 using Microsoft.Extensions.Configuration;
 
 using UI.MessengerUI;
+using UI.Request;
 
 namespace Core
 {
@@ -49,11 +50,12 @@ namespace Core
             Services = new Container();
             Services.Configure(x =>
             {
-                x.For<ILogger>().Add(LogManager.GetLogger("coloredConsole"));
+                x.For<IRequester>().Use(x => RequesterManager.GetRequester());
+                x.For<IMessenger>().Use(x => MessengerManager.GetMessenger());
+                x.For<IConfiguration>().Singleton().Add(Configuration);
                 x.For<Container>().Singleton().Add(Services);
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();
                 x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
-                x.For<IMessenger>().Add(MessengerManager.GetMessenger());
                 x.For<ICommandBus>().Use<CommandBus>();
             });
             CommandManager = Services.GetInstance<ICommandManager>();
@@ -64,7 +66,8 @@ namespace Core
         protected void InitLoggers()
         {
             LogManager.Configuration = new NLogLoggingConfiguration(Configuration.GetSection("NLog"));
-            MessengerManager.SetConfiguration(Configuration.GetSection("Messenger"));
+            MessengerManager.SetConfiguration(Configuration);
+            RequesterManager.SetConfiguration(Configuration);
         }
 
         protected IConfiguration CreateConfiguration()

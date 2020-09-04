@@ -34,10 +34,10 @@ namespace UI.MessengerUI.Managers
             ShowMessage();
         }
 
-        public void Add(string message, MessageType messageType)
+        public void Add(string message, MessageType messageType, bool createNewLine = true)
         {
-            Add(new MessageEvent(message,messageType));
-        }        
+            Add(new MessageEvent(message, messageType, createNewLine));
+        }
 
         void ShowMessage()
         {
@@ -49,10 +49,17 @@ namespace UI.MessengerUI.Managers
                 var backgroundGlass = Console.BackgroundColor;
                 var profile = Dict[messageEvent.MessageType];
                 var messageArray = StringProcessor.ExpandNewLine(messageEvent.Message)
-                                   .Select(x=> StringProcessor.Expand(Configuration.Pattern,x,messageEvent.MessageType)).ToArray();
+                                   .Select(x => StringProcessor.Expand(Configuration.Pattern, x, messageEvent.MessageType)).ToArray();
                 Console.ForegroundColor = profile.ForegroundColor;
                 Console.BackgroundColor = profile.BackgroundColor;
-                Array.ForEach(messageArray, x=> Console.WriteLine(x));
+                if (messageEvent.CreateNewLine)
+                {
+                    Array.ForEach(messageArray, x => Console.WriteLine(x));
+                }
+                else
+                {
+                    Array.ForEach(messageArray, x => Console.Write(x));
+                }
                 Console.ForegroundColor = foregroundGlass;
                 Console.BackgroundColor = backgroundGlass;
             }
