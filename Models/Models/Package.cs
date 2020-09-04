@@ -1,3 +1,4 @@
+using System;
 namespace Models
 {
     /// <summary>
@@ -9,7 +10,7 @@ namespace Models
         {
         }
 
-        public Package(string command, string parameter,string unparsedString)
+        public Package(string command, string parameter, string unparsedString)
         {
             Command = command;
             Parameter = parameter;
@@ -19,16 +20,22 @@ namespace Models
         /// Входная строка
         /// </summary>
         /// <value></value>
-        public string UnparsedString {get;set;}
+        public string UnparsedString { get; set; }
         /// <summary>
         /// Команда
         /// </summary>
         /// <value></value>
-        public string Command {get;set;}
+        public string Command { get; set; }
         /// <summary>
         /// Параметры
         /// </summary>
         /// <value></value>
-        public string Parameter {get;set;}
+        public string Parameter { get; set; }
+
+        /// <summary>
+        /// Позволяет отследить, были ли ошибки на этапах
+        /// </summary>
+        /// <value></value>
+        public bool ExistException { get; set; }
     }
 }

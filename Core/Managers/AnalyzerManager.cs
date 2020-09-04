@@ -104,6 +104,7 @@ namespace Core.Managers
             {
                 Messenger.Fatal("Unhandled fatal error during analysis phase");
                 Messenger.Trace(ex.Message);
+                package.ExistException = true;
             }
 
             return package;
