@@ -10,10 +10,13 @@ namespace UI.MessengerUI.InternalModels
 
         public MessageType MessageType { get; set; }
 
-        public MessageEvent(string message, MessageType messageType)
+        public bool CreateNewLine { get; set; }
+
+        public MessageEvent(string message, MessageType messageType, bool createNewLine = true)
         {
             this.Message = message;
             this.MessageType = messageType;
+            this.CreateNewLine = createNewLine;
         }
     }
 }

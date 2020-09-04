@@ -19,29 +19,29 @@ namespace UI.MessengerUI
             this.MessageManager = messageManager;
         }
 
-        public void Trace(string message)
+        public void Trace(string message, bool createNewLine = true)
         {
-            MessageManager.Add(message,MessageType.Trace);
+            MessageManager.Add(message, MessageType.Trace, createNewLine);
         }
 
-        public void Info(string message)
+        public void Info(string message, bool createNewLine = true)
         {
-            MessageManager.Add(message,MessageType.Info);
+            MessageManager.Add(message, MessageType.Info, createNewLine);
         }
 
-        public void Warn(string message)
+        public void Warn(string message, bool createNewLine = true)
         {
-            MessageManager.Add(message,MessageType.Warn);
+            MessageManager.Add(message, MessageType.Warn, createNewLine);
         }
 
-        public void Error(string message)
+        public void Error(string message, bool createNewLine = true)
         {
-            MessageManager.Add(message,MessageType.Error);
+            MessageManager.Add(message, MessageType.Error, createNewLine);
         }
 
-        public void Fatal(string message)
+        public void Fatal(string message, bool createNewLine = true)
         {
-            MessageManager.Add(message,MessageType.Fatal);
+            MessageManager.Add(message, MessageType.Fatal, createNewLine);
         }
     }
 }

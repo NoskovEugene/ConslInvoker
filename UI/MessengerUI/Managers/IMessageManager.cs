@@ -7,6 +7,6 @@ namespace UI.MessengerUI.Managers
     {
         void Add(MessageEvent message);
 
-        void Add(string message, MessageType messageType);
+        void Add(string message, MessageType messageType, bool createNewLine = true);
     }
 }
