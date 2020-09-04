@@ -11,7 +11,8 @@ namespace UI.MessengerUI.Processors
             pattern = pattern.Replace("${message}", message)
                              .Replace("${messagetype}", messengerType.ToString().ToUpper())
                              .Replace("${shortdate}", DateTime.Now.ToString("dd:MM:yyyy"))
-                             .Replace("${date}", DateTime.Now.ToString());
+                             .Replace("${date}", DateTime.Now.ToString())
+                             .Replace("${time}", DateTime.Now.ToString("HH:mm:ss"));
             return pattern;
         }
     }

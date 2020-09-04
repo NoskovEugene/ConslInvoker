@@ -23,13 +23,9 @@ namespace Core
     {
         public IConfiguration Configuration { get; }
 
-        public IMessenger Messenger { get; }
-
         public Container Services { get; }
 
         public ICommandManager CommandManager { get; }
-
-        public IAnalyzerManager Analyzermanager { get; }
 
         public InvokerCore()
         {
@@ -46,8 +42,8 @@ namespace Core
                 x.For<ICommandBus>().Use<CommandBus>();
             });
             CommandManager = Services.GetInstance<ICommandManager>();
-            Analyzermanager = Services.GetInstance<IAnalyzerManager>();
-            Analyzermanager.AddAnalyzer<Analyzer>();
+            var analyzermanager = Services.GetInstance<IAnalyzerManager>();
+            analyzermanager.AddAnalyzer<Analyzer>();
         }
 
         protected void InitLoggers()
