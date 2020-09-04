@@ -24,8 +24,16 @@ namespace Core.Managers
             Messenger = messenger;
         }
 
+        /// <summary>
+        /// Корневой анализатор
+        /// </summary>
+        /// <value></value>
         public IAnalyzer RootAnalyzer { get; set; }
 
+        /// <summary>
+        /// Добавляет новый слой анализаторов
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
         public void AddAnalyzer<T>()
             where T : IAnalyzer
         {
@@ -53,6 +61,10 @@ namespace Core.Managers
             }
         }
 
+
+        /// <summary>
+        /// Удаляет последний слой анализаторов
+        /// </summary>
         public void RemoveLastAnalyzer()
         {
             var analyzer = RootAnalyzer.NextAnalyzer;
@@ -72,6 +84,11 @@ namespace Core.Managers
             }
         }
 
+        /// <summary>
+        /// Запускает процесс анализа входящей строки
+        /// </summary>
+        /// <param name="line"></param>
+        /// <returns></returns>
         public Package Analyze(string line)
         {
             var package = new Package()
