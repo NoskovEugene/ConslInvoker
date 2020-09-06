@@ -1,7 +1,8 @@
 using System;
 using System.Linq;
 
-using Core.Extensions;
+using Infrastructure.Extensions;
+
 using Models;   
 
 namespace Core.Analyzers

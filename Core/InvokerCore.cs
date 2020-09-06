@@ -9,9 +9,10 @@ using NLog.Extensions.Logging;
 using Core.Buses;
 using Core.Managers;
 using Core.Analyzers;
+using Core.Storage;
 using Models;
-using Infrastructure;
-using Infrastructure.Commands;
+
+using AutoMapper;
 
 using Microsoft.Extensions.Configuration;
 
@@ -56,6 +57,7 @@ namespace Core
                 x.For<Container>().Singleton().Add(Services);
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();
                 x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
+                x.For<IAppStorage>().Singleton().Use<AppStorage>();
                 x.For<ICommandBus>().Use<CommandBus>();
             });
             CommandManager = Services.GetInstance<ICommandManager>();
@@ -68,6 +70,7 @@ namespace Core
             LogManager.Configuration = new NLogLoggingConfiguration(Configuration.GetSection("NLog"));
             MessengerManager.SetConfiguration(Configuration);
             RequesterManager.SetConfiguration(Configuration);
+            
         }
 
         protected IConfiguration CreateConfiguration()
@@ -78,7 +81,7 @@ namespace Core
         }
 
         /// <summary>
-        /// Переводит ядро в режим ожидания
+        /// Puts core into standby mode
         /// </summary>
         public void StartListen()
         {
