@@ -10,7 +10,6 @@ using UI.Request;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using Core.Storage;
-using AutoMapper;
 
 namespace ConsoleInvoker
 {
