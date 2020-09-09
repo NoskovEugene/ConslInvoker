@@ -12,8 +12,6 @@ using Core.Analyzers;
 using Core.Storage;
 using Models;
 
-using AutoMapper;
-
 using Microsoft.Extensions.Configuration;
 
 using UI.MessengerUI;
