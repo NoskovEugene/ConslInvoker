@@ -16,6 +16,7 @@ using Microsoft.Extensions.Configuration;
 
 using UI.MessengerUI;
 using UI.Request;
+using Core.TypeConverter;
 
 namespace Core
 {
@@ -51,6 +52,7 @@ namespace Core
             {
                 x.For<IRequester>().Use(x => RequesterManager.GetRequester());
                 x.For<IMessenger>().Use(x => MessengerManager.GetMessenger());
+                
                 x.For<IConfiguration>().Singleton().Add(Configuration);
                 x.For<Container>().Singleton().Add(Services);
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();

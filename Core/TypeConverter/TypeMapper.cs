@@ -14,11 +14,21 @@ namespace Core.TypeConverter
 
         public TypeMapperResult<TOut> Map<TIn, TOut>(TIn instance)
         {
-            var converter = Controller.RequestConverter<TIn, TOut>();
+            var config = Controller.RequestConfig<TIn, TOut>();
             try
             {
-                var result = converter.Convert(instance);
-                return new TypeMapperResult<TOut>(result, true, null);
+                if (config.ConvertExpression != null)
+                {
+                    var result = (TOut)config.ConvertExpression.Compile().DynamicInvoke(instance);
+                    return new TypeMapperResult<TOut>(result, true, null);
+                }
+                else
+                {
+                    var converter = (IValueTypeConverter<TIn, TOut>)config.ConverterInstance;
+                    var result = converter.Convert(instance);
+                    return new TypeMapperResult<TOut>(result, true, null);
+                }
+
             }
             catch (Exception ex)
             {

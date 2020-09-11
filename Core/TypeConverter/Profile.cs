@@ -1,3 +1,5 @@
+using System.Linq.Expressions;
+using System;
 using Core.TypeConverter.Configuration;
 using Models;
 namespace Core.TypeConverter
@@ -15,6 +17,12 @@ namespace Core.TypeConverter
         where TConvert : IValueTypeConverter<TIn,TOut>
         {
             controller.Add<TIn,TOut, TConvert>();
+        }
+
+
+        public void CreateMap<TIn,TOut>(Expression<Func<TIn,TOut>> convertExpression)
+        {
+            controller.Add<TIn,TOut>(convertExpression);
         }
     }
 }
