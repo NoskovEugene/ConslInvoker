@@ -2,7 +2,7 @@ using Core.TypeConverter.Configuration;
 using Models;
 namespace Core.TypeConverter
 {
-    public class TypeMapperFactory
+    public class TypeMapperFactory : ITypeMapperFactory
     {
         private MapController MapController { get; set; }
 

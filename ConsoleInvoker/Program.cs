@@ -27,38 +27,10 @@ namespace ConsoleInvoker
             core.CommandManager.RegistryCommandUseAttribute<QuitCommand>();
             core.CommandManager.RegistryCommandUseAttribute<MessengerTestCommand>();
             core.CommandManager.RegistryCommandUseAttribute<RequesterTestCommand>();
-
-            var methodInfo = typeof(Converter).GetMethod("Convert");
-            var exp = Expression.Call(Expression.Constant(new Converter()),methodInfo);
-            var lambda = Expression.Lambda(exp).Compile();
-            var result = lambda.DynamicInvoke("123");
-            Console.WriteLine(result);
-
-
             Console.ReadKey();
         }
 
 
 
     }
-
-    public class Converter : IValueTypeConverter<string, int>
-    {
-        public int Convert(string instance)=>int.Parse(instance);
-    }
-
-    class TypeMapperExpression
-    {
-        public Type SourceType { get; set; }
-
-        public Type DestinationType { get; set; }
-
-        public Type ConverterType { get; set; }
-
-        public object ConvertInstance { get; set; }
-
-
-    }
-
-
 }

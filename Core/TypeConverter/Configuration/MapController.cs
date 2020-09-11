@@ -50,7 +50,7 @@ namespace Core.TypeConverter.Configuration
         {
             var item = Map.Where(x => x.Source == typeof(TIn) & x.Destination == typeof(TOut)).FirstOrDefault();
 
-            if(item == null)
+            if (item == null)
             {
                 throw new Exception($"Map for {typeof(TIn)} to {typeof(TOut)} not found");
             }
@@ -61,7 +61,8 @@ namespace Core.TypeConverter.Configuration
             }
             else
             {
-                item.ConverterInstance = Activator.CreateInstance(item.ConverterType);
+                if (item.ConverterInstance == null)
+                    item.ConverterInstance = Activator.CreateInstance(item.ConverterType);
                 return item;
             }
         }

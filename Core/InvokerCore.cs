@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration;
 using UI.MessengerUI;
 using UI.Request;
 using Core.TypeConverter;
+using Core.CoreSettings;
 
 namespace Core
 {
@@ -27,7 +28,6 @@ namespace Core
         /// </summary>
         /// <value></value>
         public IConfiguration Configuration { get; }
-
 
         /// <summary>
         /// Контейнер приложения
@@ -50,9 +50,10 @@ namespace Core
             Services = new Container();
             Services.Configure(x =>
             {
+                x.For<ITypeMapperFactory>().Singleton().Use<TypeMapperFactory>();
                 x.For<IRequester>().Use(x => RequesterManager.GetRequester());
                 x.For<IMessenger>().Use(x => MessengerManager.GetMessenger());
-                
+                x.For<ITypeMapper>().Use(x => x.GetInstance<ITypeMapperFactory>().GetTypeMapper());
                 x.For<IConfiguration>().Singleton().Add(Configuration);
                 x.For<Container>().Singleton().Add(Services);
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();
@@ -60,9 +61,11 @@ namespace Core
                 x.For<IAppStorage>().Singleton().Use<AppStorage>();
                 x.For<ICommandBus>().Use<CommandBus>();
             });
+            Services.GetInstance<ITypeMapperFactory>().Configure(new TypeConverterDefaultProfile());
             CommandManager = Services.GetInstance<ICommandManager>();
             var analyzermanager = Services.GetInstance<IAnalyzerManager>();
             analyzermanager.AddAnalyzer<Analyzer>();
+
         }
 
         protected void InitLoggers()
