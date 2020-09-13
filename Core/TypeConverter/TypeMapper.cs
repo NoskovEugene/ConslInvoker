@@ -35,5 +35,7 @@ namespace Core.TypeConverter
                 return new TypeMapperResult<TOut>(default, false, ex);
             }
         }
+
+        
     }
 }

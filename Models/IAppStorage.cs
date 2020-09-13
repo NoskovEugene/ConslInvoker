@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Models
 {
     public interface IAppStorage
@@ -35,6 +38,21 @@ namespace Models
         /// <param name="instance"></param>
         /// <typeparam name="T"></typeparam>
         void Insert<T>(string key, T instance);
+
+        /// <summary>
+        /// Find type by key
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        Type FindType(string key);
+
+        /// <summary>
+        /// Производит поиск элементов солгасно фильтру
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        IEnumerable<StorageItem> FindItems(Func<KeyValuePair<string, StorageItem>, bool> filter);
+
 
         // /// <summary>
         // /// Load storage from file

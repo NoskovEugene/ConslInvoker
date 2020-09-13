@@ -1,4 +1,6 @@
 using System;
+using System.Collections;
+using System.Collections.Generic;
 namespace Models
 {
     /// <summary>
@@ -8,13 +10,15 @@ namespace Models
     {
         public Package()
         {
+            ParsedParameter = new Dictionary<string, object>();
         }
 
-        public Package(string command, string parameter, string unparsedString)
+        public Package(string command, string parameter, string unparsedString) : base()
         {
             Command = command;
             Parameter = parameter;
             UnparsedString = unparsedString;
+
         }
         /// <summary>
         /// Входная строка
@@ -37,5 +41,11 @@ namespace Models
         /// </summary>
         /// <value></value>
         public bool ExistException { get; set; }
+
+        /// <summary>
+        /// Преобразованные параметры
+        /// </summary>
+        /// <value></value>
+        public Dictionary<string, object> ParsedParameter { get; set; }
     }
 }

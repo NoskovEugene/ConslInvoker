@@ -64,9 +64,8 @@ namespace UI.Request
         {
             Messenger.Info(message);
             Messenger.Info("[Y/N] ", false);
-            var key = Console.ReadKey(false);
-            Console.WriteLine();
-            if (key.Key == ConsoleKey.Y)
+            var keyLine = Console.ReadLine();
+            if (keyLine == "y" || keyLine == "Y")
             {
                 return true;
             }

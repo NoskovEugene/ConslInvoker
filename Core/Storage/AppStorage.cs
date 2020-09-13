@@ -1,14 +1,17 @@
+using System;
+using System.Linq;
 using System.IO;
 using System.Collections.Generic;
-using Core.Storage.Models;
-using Models;   
+
+
+using Models;
 using UI.MessengerUI;
 using UI.Request;
 
+
+
 namespace Core.Storage
 {
-
-
     public class AppStorage : IAppStorage
     {
         Dictionary<string, StorageItem> Storage = new Dictionary<string, StorageItem>();
@@ -17,7 +20,7 @@ namespace Core.Storage
 
         protected IRequester Requester { get; set; }
 
-        private string DirectoryPath { get;}
+        private string DirectoryPath { get; }
 
         private const string APPSTORAGEPATH = "ApplicationStorage";
 
@@ -25,8 +28,8 @@ namespace Core.Storage
         {
             this.Messenger = messenger;
             this.Requester = requester;
-            this.DirectoryPath = Path.Combine(Directory.GetCurrentDirectory(),APPSTORAGEPATH);
-            if(!Directory.Exists(DirectoryPath))
+            this.DirectoryPath = Path.Combine(Directory.GetCurrentDirectory(), APPSTORAGEPATH);
+            if (!Directory.Exists(DirectoryPath))
             {
                 Directory.CreateDirectory(DirectoryPath);
             }
@@ -81,5 +84,19 @@ namespace Core.Storage
             return null;
         }
 
+        public Type FindType(string key)
+        {
+            if (Storage.ContainsKey(key))
+            {
+                var item = Storage[key];
+                return item.Type;
+            }
+            return null;
+        }
+
+        public IEnumerable<StorageItem> FindItems(Func<KeyValuePair<string, StorageItem>, bool> filter)
+        {
+            return Storage.Where(filter).Select(x => x.Value);
+        }
     }
 }

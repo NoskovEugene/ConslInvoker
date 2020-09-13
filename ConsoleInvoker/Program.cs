@@ -1,21 +1,8 @@
-﻿using System.Reflection;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.IO;
-using System.Diagnostics;
-using System.Xml.Linq;
-using System.Diagnostics.Contracts;
-using System.Linq.Expressions;
-using System;
-using System.Text;
+﻿using System;
 
 using Core;
 
-using Models;
-
 using Infrastructure.Commands;
-using Core.TypeConverter;
-using Core.CoreSettings;
 
 namespace ConsoleInvoker
 {
@@ -27,10 +14,10 @@ namespace ConsoleInvoker
             core.CommandManager.RegistryCommandUseAttribute<QuitCommand>();
             core.CommandManager.RegistryCommandUseAttribute<MessengerTestCommand>();
             core.CommandManager.RegistryCommandUseAttribute<RequesterTestCommand>();
+            core.CommandManager.RegistryCommandUseAttribute<SetToStorageItemCommand>();
+            core.CommandManager.RegistryCommandUseAttribute<GetFromStorageCommand>();
+            core.StartListen();
             Console.ReadKey();
         }
-
-
-
     }
 }
