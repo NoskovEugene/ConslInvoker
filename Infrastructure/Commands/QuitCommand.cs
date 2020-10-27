@@ -1,5 +1,5 @@
 using System.Threading;
-using Models;
+using Shared.Models;
 using System;
 using System.Reflection;
 using Infrastructure.Attributes;

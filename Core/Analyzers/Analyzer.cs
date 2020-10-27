@@ -3,7 +3,7 @@ using System.Linq;
 
 using Infrastructure.Extensions;
 
-using Models;   
+using Shared.Models;   
 
 namespace Core.Analyzers
 {

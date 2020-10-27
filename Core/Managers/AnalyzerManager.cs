@@ -6,7 +6,7 @@ using StructureMap;
 using Core;
 using Core.Analyzers;
 
-using Models;
+using Shared.Models;
 using UI.MessengerUI;
 
 namespace Core.Managers

@@ -1,5 +1,5 @@
 using System;
-using Models;
+using Shared.Models;
 using Core.TypeConverter.Configuration;
 namespace Core.TypeConverter
 {

@@ -1,5 +1,5 @@
 
-namespace Models
+namespace Shared.Models
 {
     public interface ICommand
     {

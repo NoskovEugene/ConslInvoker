@@ -1,4 +1,4 @@
-using Models;
+using Shared.Models;
 using Core.Managers;
 using UI.MessengerUI;
 

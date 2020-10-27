@@ -1,4 +1,4 @@
-using Models;
+using Shared.Models;
 
 namespace Core.Buses
 {

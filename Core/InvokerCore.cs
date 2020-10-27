@@ -10,7 +10,7 @@ using Core.Buses;
 using Core.Managers;
 using Core.Analyzers;
 using Core.Storage;
-using Models;
+using Shared.Models;
 
 using Microsoft.Extensions.Configuration;
 

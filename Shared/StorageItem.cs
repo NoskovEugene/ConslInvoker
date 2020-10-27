@@ -1,6 +1,6 @@
 using System;
 
-namespace Models
+namespace Shared.Models
 {
     [Serializable]
     public class StorageItem

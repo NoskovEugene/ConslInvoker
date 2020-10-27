@@ -1,5 +1,5 @@
 using Core.TypeConverter.Configuration;
-using Models;
+using Shared.Models;
 namespace Core.TypeConverter
 {
     public class TypeMapperFactory : ITypeMapperFactory
