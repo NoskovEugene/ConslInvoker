@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-using Models;
+using Shared.Models;
 
 namespace Core.TypeConverter.Configuration
 {

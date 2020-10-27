@@ -1,4 +1,4 @@
-using Models;
+using Shared.Models;
 using UI.MessengerUI;
 using Infrastructure.Attributes;
 

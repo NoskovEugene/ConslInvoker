@@ -4,6 +4,8 @@ using Core;
 
 using Infrastructure.Commands;
 
+using Shared.Models;
+
 namespace ConsoleInvoker
 {
     class Program
