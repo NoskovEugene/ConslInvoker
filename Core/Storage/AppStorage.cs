@@ -1,7 +1,7 @@
 using System.IO;
 using System.Collections.Generic;
 using Core.Storage.Models;
-using Models;   
+using SharedModels;   
 using UI.MessengerUI;
 using UI.Request;
 

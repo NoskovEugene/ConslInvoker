@@ -11,7 +11,7 @@ using System.Text;
 
 using Core;
 
-using Models;
+using SharedModels;
 
 using Infrastructure.Commands;
 using Core.TypeConverter;

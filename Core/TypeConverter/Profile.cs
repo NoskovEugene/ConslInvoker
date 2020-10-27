@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using System;
 using Core.TypeConverter.Configuration;
-using Models;
+using SharedModels;
 namespace Core.TypeConverter
 {
     public abstract class Profile

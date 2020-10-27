@@ -1,6 +1,6 @@
 using System;
 
-namespace Models
+namespace SharedModels
 {
     public class TypeMapperResult<T>
     {

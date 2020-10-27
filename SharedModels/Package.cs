@@ -1,5 +1,5 @@
 using System;
-namespace Models
+namespace SharedModels
 {
     /// <summary>
     /// Внутренний пакет

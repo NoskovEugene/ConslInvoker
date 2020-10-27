@@ -1,7 +1,7 @@
 using System.Linq;
 using Core.Exceptions;
 using Infrastructure.Attributes;
-using Models;
+using SharedModels;
 using StructureMap;
 using System;
 using System.Reflection;

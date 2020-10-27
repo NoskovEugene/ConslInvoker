@@ -1,4 +1,4 @@
-using Models;
+using SharedModels;
 namespace Core.CoreSettings.Converters
 {
     public class StringToInt : IValueTypeConverter<string, int>

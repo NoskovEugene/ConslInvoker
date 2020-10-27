@@ -1,4 +1,4 @@
-using Models;
+using SharedModels;
 
 namespace Core.TypeConverter
 {

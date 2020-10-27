@@ -2,7 +2,7 @@ using Infrastructure.Attributes;
 using Infrastructure.Extensions;
 using UI.MessengerUI;
 using UI.Request;
-using Models;
+using SharedModels;
 using System;
 
 namespace Infrastructure.Commands

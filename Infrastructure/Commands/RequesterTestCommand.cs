@@ -2,7 +2,7 @@ using System.Text;
 
 using UI.Request;
 using UI.MessengerUI;
-using Models;
+using SharedModels;
 using Infrastructure.Attributes;
 
 namespace Infrastructure.Commands
