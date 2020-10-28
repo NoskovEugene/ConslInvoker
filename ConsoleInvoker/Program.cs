@@ -1,10 +1,15 @@
-﻿using System;
+﻿using Microsoft.VisualBasic.CompilerServices;
+using System;
 
 using Core;
 
 using Infrastructure.Commands;
 
 using Shared.Models;
+
+using Routing;
+using Routing.Models;
+using System.Reflection;
 
 namespace ConsoleInvoker
 {
@@ -18,7 +23,9 @@ namespace ConsoleInvoker
             core.CommandManager.RegistryCommandUseAttribute<RequesterTestCommand>();
             core.CommandManager.RegistryCommandUseAttribute<SetToStorageItemCommand>();
             core.CommandManager.RegistryCommandUseAttribute<GetFromStorageCommand>();
-            core.StartListen();
+
+            
+            
             Console.ReadKey();
         }
     }
