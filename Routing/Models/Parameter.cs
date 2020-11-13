@@ -4,20 +4,25 @@ namespace Routing.Models
 {
     public class Parameter : NamedEntity
     {
+        #region Fields
 
         public ParameterInfo ParameterInfo { get; set; }
 
-        public bool NeedChoose { get; set; }
+        public bool IsSelectable { get; set; }
 
-        public List<string> EnabledValues { get; set; }
+        public List<string> SelectableValues { get; set; }
+
+        #endregion
+
+
 
         public string ToString(string prefix)
         {
             var outS = $"{prefix}Parameter {Name} with Type {ParameterInfo.ParameterType}";
-            if(NeedChoose)
+            if(IsSelectable)
             {
                 outS = $"{outS} will be:\r\n";
-                foreach(var item in EnabledValues)
+                foreach(var item in SelectableValues)
                 {
                     outS += $"{prefix}{item}\r\n";
                 }

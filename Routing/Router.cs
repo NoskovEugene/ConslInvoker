@@ -1,16 +1,21 @@
+using System.Linq;
+using System.Linq.Expressions;
+using System.Runtime.CompilerServices;
 using System.Reflection;
 using System.Collections.Generic;
 using System.ComponentModel;
 
 using Routing.Models;
-
 using Shared.Attributes;
+using Shared.Extensions;
+using System.Text.RegularExpressions;
+using Routing.Extensions;
+
 namespace Routing
 {
     public class Router
     {
-        private const string PARAMETER_PATTERN = @"\[.+?\]";
-        private const string MULTIPLY_PARAMETERS = @"\{.+?\}";
+
 
         protected List<Utility> Utilities { get; set; }
 
@@ -29,15 +34,30 @@ namespace Routing
 
         public void AddApi<T>()
         {
-
+            var type = typeof(T);
+            var utilityAttribute = type.GetCustomAttribute<UtilityAttribute>();
+            if (utilityAttribute != null)
+            {
+                var utility = new Utility
+                {
+                    UtilityType = type,
+                    Name = utilityAttribute.UtilityName,
+                };
+                var methods = type.GetMethods();
+                methods.Foreach(method =>
+                {
+                    var routAttribute = method.GetCustomAttribute<RoutAttribute>();
+                    if (routAttribute != null)
+                    {
+                        var rout = GetRout(method,utility.Name,routAttribute);
+                        utility.Routs.Add(rout);
+                    }
+                });
+                Utilities.Add(utility);
+            }
         }
 
-        private Rout GetRout(MethodInfo method)
-        {
-            var routAttribute = method.GetCustomAttribute<RoutAttribute>();
+        
 
-
-            return new Rout();
-        }
     }
 }
