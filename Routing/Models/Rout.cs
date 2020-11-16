@@ -9,6 +9,8 @@ namespace Routing.Models
 
         public MethodInfo Method { get; set; }
 
+        public object RoutInstanse { get; set; }
+
         public List<Parameter> Parameters { get; set; }
 
         public string ToString(string prefix)

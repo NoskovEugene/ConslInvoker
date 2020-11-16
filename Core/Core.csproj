@@ -3,6 +3,7 @@
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
     <ProjectReference Include="..\UI\UI.csproj" />
     <ProjectReference Include="..\Shared\Shared.csproj" />
+    <ProjectReference Include="..\Routing\Routing.csproj" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="structuremap" Version="4.7.1" />

@@ -18,6 +18,8 @@ using UI.MessengerUI;
 using UI.Request;
 using Core.TypeConverter;
 using Core.CoreSettings;
+using Routing;
+using Routing.Services;
 
 namespace Core
 {
@@ -60,6 +62,7 @@ namespace Core
                 x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
                 x.For<IAppStorage>().Singleton().Use<AppStorage>();
                 x.For<ICommandBus>().Use<CommandBus>();
+                x.For<IStringService>().Use<StringService>();
             });
             Services.GetInstance<ITypeMapperFactory>().Configure(new TypeConverterDefaultProfile());
             CommandManager = Services.GetInstance<ICommandManager>();
