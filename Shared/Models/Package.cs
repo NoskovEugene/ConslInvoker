@@ -20,6 +20,7 @@ namespace Shared.Models
             UnparsedString = unparsedString;
 
         }
+
         /// <summary>
         /// Входная строка
         /// </summary>
@@ -49,6 +50,12 @@ namespace Shared.Models
         /// </summary>
         /// <value></value>
         public bool ExistException { get; set; }
+
+        /// <summary>
+        /// Массив параметров
+        /// </summary>
+        /// <value></value>
+        public string[] SplitedParams { get; set; }
 
         /// <summary>
         /// Преобразованные параметры

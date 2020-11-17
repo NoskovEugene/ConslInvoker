@@ -62,13 +62,12 @@ namespace Core
                 x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
                 x.For<IAppStorage>().Singleton().Use<AppStorage>();
                 x.For<ICommandBus>().Use<CommandBus>();
-                x.For<IStringService>().Use<StringService>();
+                x.AddRouting();
             });
             Services.GetInstance<ITypeMapperFactory>().Configure(new TypeConverterDefaultProfile());
             CommandManager = Services.GetInstance<ICommandManager>();
             var analyzermanager = Services.GetInstance<IAnalyzerManager>();
             analyzermanager.AddAnalyzer<Analyzer>();
-
         }
 
         protected void InitLoggers()

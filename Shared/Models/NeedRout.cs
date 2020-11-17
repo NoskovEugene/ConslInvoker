@@ -1,4 +1,4 @@
-namespace Routing.Models
+namespace Shared.Models
 {
     public class NeedRout
     {

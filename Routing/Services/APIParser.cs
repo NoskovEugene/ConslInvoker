@@ -3,16 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Routing.Extensions;
-using Routing.Models;
 using Shared.Attributes;
 using Shared.Extensions;
+using Shared.Models;
 
 namespace Routing.Services
 {
-    public class APIParser
+
+
+    public class APIParser : IAPIParser
     {
 
-        protected IStringService StringService { get; set; }
+        protected IStringService StringService { get; set; } = new StringService();
 
         public Utility GetApiMap<T>()
         {
@@ -27,7 +29,7 @@ namespace Routing.Services
                     Name = utilityAttribute.UtilityName,
                 };
 
-                if(parserAttribute != null)
+                if (parserAttribute != null)
                 {
                     utility.ParserExists = true;
                     utility.ParserType = parserAttribute.Parser;
@@ -93,6 +95,7 @@ namespace Routing.Services
                     {
                         parameters[i].Name = methodParam.Name;
                     }
+                    parameters[i].Name = parameters[i].Name.Trim('[', ']', '{', '}');
                     parameters[i].ParameterInfo = methodParam;
                     parameters[i].ParameterType = methodParam.ParameterType;
                 }

@@ -4,9 +4,9 @@ namespace Shared.Models
 {
     public interface IParser
     {
-        void Parse(Package package);
+        void Parse(Package package, NeedRout rout);
 
-        Dictionary<string, object> Parameters { get; set; }
+        Dictionary<string, object> Parameters { get; }
 
         bool Success { get; set; }
 

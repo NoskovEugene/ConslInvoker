@@ -1,7 +1,8 @@
+using System;
 using System.Xml.Linq;
 using System.Linq;
 using System.Collections.Generic;
-using Routing.Models;
+using Shared.Models;
 
 namespace Routing.Services
 {
@@ -9,13 +10,18 @@ namespace Routing.Services
 
     public class UtilityController : IUtilityController
     {
-        public List<Utility> Utilities { get; set; }
+        protected List<Utility> Utilities { get; set; }
 
         protected IEnumerable<Utility> Query { get; set; }
 
         public int QueryCount { get; set; }
 
         public bool Success { get; set; }
+
+        public UtilityController()
+        {
+            Utilities = new List<Utility>();
+        }
 
         public UtilityController Match(string name)
         {
@@ -40,7 +46,13 @@ namespace Routing.Services
             {
                 Utilities.Add(utility);
             }
+        }
 
+        public void Update(Func<Utility, bool> filter, Action<Utility> updateAction)
+        {
+            var utility = Utilities.Where(filter).FirstOrDefault();
+            if (utility != null)
+                updateAction(utility);
         }
     }
 }

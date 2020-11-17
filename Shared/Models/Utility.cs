@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-namespace Routing.Models
+namespace Shared.Models
 {
     public class Utility : NamedEntity
     {
@@ -39,7 +39,7 @@ namespace Routing.Models
         /// Объект парсера
         /// </summary>
         /// <value></value>
-        public object Instanse { get; set; }
+        public object ParserInstanse { get; set; }
 
         public List<string> GetRoutNames
         {

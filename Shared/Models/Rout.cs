@@ -1,15 +1,13 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System;
-namespace Routing.Models
+namespace Shared.Models
 {
     public class Rout : NamedEntity
     {
         public Type Class { get; set; }
 
         public MethodInfo Method { get; set; }
-
-        public object RoutInstanse { get; set; }
 
         public List<Parameter> Parameters { get; set; }
 

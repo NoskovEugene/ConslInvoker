@@ -1,7 +1,8 @@
+using System;
 using System.Linq;
 using System.Collections.Generic;
 using Routing.Services;
-using Routing.Models;
+using Shared.Models;
 
 namespace Routing.Services
 {
@@ -10,6 +11,11 @@ namespace Routing.Services
     public class Map : IMap
     {
         protected IUtilityController UtilityController { get; set; }
+
+        public Map()
+        {
+            UtilityController = new UtilityController();
+        }
 
         public IMap AddUtility(Utility utility)
         {
@@ -35,6 +41,16 @@ namespace Routing.Services
             {
                 return null;
             }
+        }
+
+        public void SetParserInstanse(Type parser, object instanse)
+        {
+            UtilityController.Update(x => x.ParserExists && x.ParserType == parser, x => x.ParserInstanse = instanse);
+        }
+
+        public void SetUtilityInstanse(Utility utility, object instanse)
+        {
+            UtilityController.Update(x => x.Equals(utility), x => x.UtilityInstanse = instanse);
         }
     }
 }
