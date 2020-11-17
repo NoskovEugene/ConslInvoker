@@ -23,6 +23,24 @@ namespace Routing.Models
         /// <value></value>
         public object UtilityInstanse { get; set; }
 
+        /// <summary>
+        /// Существует ли парсер для данной утилиты
+        /// </summary>
+        /// <value></value>
+        public bool ParserExists { get; set; }
+
+        /// <summary>
+        /// Тип парсера
+        /// </summary>
+        /// <value></value>
+        public Type ParserType { get; set; }
+
+        /// <summary>
+        /// Объект парсера
+        /// </summary>
+        /// <value></value>
+        public object Instanse { get; set; }
+
         public List<string> GetRoutNames
         {
             get

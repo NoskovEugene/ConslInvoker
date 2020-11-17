@@ -12,6 +12,7 @@ using Routing.Models;
 using System.Reflection;
 using Shared.Attributes;
 using StructureMap;
+using System.Collections.Generic;
 
 namespace ConsoleInvoker
 {
@@ -29,12 +30,13 @@ namespace ConsoleInvoker
 
             var router = core.Services.GetInstance<Router>();
             router.AddApi<ToDoApi>();
-
+            
             Console.ReadKey();
         }
     }
 
     [Utility(UtilityName = "todo")]
+    [Parser(typeof(Parser))]
     public class ToDoApi
     {
 
@@ -48,6 +50,19 @@ namespace ConsoleInvoker
         public void AddToDo(string startDateTime, int toDoType, params int[] dayOfWeek)
         {
 
+        }
+    }
+
+    public class Parser : IParser
+    {
+        public Dictionary<string, object> Parameters { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Success { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string ExceptionMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public Exception Exception { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+
+        public void Parse(Package package)
+        {
+            throw new NotImplementedException();
         }
     }
 }

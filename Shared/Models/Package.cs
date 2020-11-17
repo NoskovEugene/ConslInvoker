@@ -25,11 +25,19 @@ namespace Shared.Models
         /// </summary>
         /// <value></value>
         public string UnparsedString { get; set; }
+
+        /// <summary>
+        /// Имя утилиты
+        /// </summary>
+        /// <value></value>
+        public string Utility { get; set; }
+
         /// <summary>
         /// Команда
         /// </summary>
         /// <value></value>
         public string Command { get; set; }
+
         /// <summary>
         /// Параметры
         /// </summary>

@@ -4,16 +4,16 @@ namespace Shared.Models
 {
     public class TypeMapperResult<T>
     {
-        public TypeMapperResult(T item, bool converter, Exception exception)
+        public TypeMapperResult(T item, bool converted, Exception exception)
         {
             Item = item;
-            Converter = converter;
+            Converted = converted;
             Exception = exception;
         }
 
         public T Item { get; private set; }
 
-        public bool Converter { get; private set; }
+        public bool Converted { get; private set; }
 
         public Exception Exception { get; private set; }
     }

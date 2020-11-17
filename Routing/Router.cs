@@ -12,18 +12,21 @@ using Shared.Extensions;
 using System.Text.RegularExpressions;
 using Routing.Extensions;
 using Routing.Services;
+using Shared.Models;
 
 namespace Routing
 {
     public class Router
     {
-
+        protected APIParser APIParser { get; set; }
 
         protected List<Utility> Utilities { get; set; }
 
         protected Container Services { get; set; }
 
         protected IStringService StringService { get; set; }
+
+        protected IMap Map { get; set; }
 
         public Router(Container services, IStringService stringService)
         {
@@ -39,97 +42,18 @@ namespace Routing
 
         public void AddApi<T>()
         {
-            var type = typeof(T);
-            var utilityAttribute = type.GetCustomAttribute<UtilityAttribute>();
-            if (utilityAttribute != null)
+            var utility = APIParser.GetApiMap<T>();
+
+            if(utility != null)
             {
-                var utility = new Utility
-                {
-                    UtilityType = type,
-                    Name = utilityAttribute.UtilityName,
-                };
-                var methods = type.GetMethods();
-                methods.Foreach(method =>
-                {
-                    var routAttribute = method.GetCustomAttribute<RoutAttribute>();
-                    if (routAttribute != null)
-                    {
-                        var rout = GetRout(method, utility.Name, routAttribute);
-                        rout.Class = type;
-                        utility.Routs.Add(rout);
-                    }
-                });
-                Utilities.Add(utility);
+                Map.AddUtility(utility);
             }
         }
 
-
-        private Rout GetRout(MethodInfo method, string utilityName, RoutAttribute attribute)
+        public NeedRout GetRout(Package package)
         {
-            var apiMethodName = attribute.CommandName;
-            var parametersLine = attribute.Parameters;
-            var parameters = new List<Parameter>();
-            var selectableParameters = new List<Parameter>();
-
-            var rout = new Rout()
-            {
-                Method = method,
-                Name = apiMethodName
-            };
-
-            var id = StringService.AddProfile();
-            StringService.SetInputLine(id, parametersLine, x => { parametersLine = x; })
-                         .SetRemoveStat(id, true)
-                         .SetPattern(id, @"\{.+?\}");
-            var res = StringService.Next(id);
-            while (res.success)
-            {
-                var parameter = new Parameter();
-                parameter.IsSelectable = true;
-                parameter.SelectableValues = GetParams<string>(res.output, x => x);
-                selectableParameters.Add(parameter);
-            }
-
-            if (parametersLine.MultiContains("[", "]"))
-            {
-                parameters = GetParams<Parameter>(parametersLine, x => new Parameter() { Name = x });
-            }
-
-            parameters.AddRange(selectableParameters);
-            var methodParams = method.GetParameters();
-            if (parameters.Count() == methodParams.Count())
-            {
-                for (int i = 0; i < methodParams.Count(); i++)
-                {
-                    var methodParam = methodParams[i];
-                    if (parameters[i].IsSelectable)
-                    {
-                        parameters[i].Name = methodParam.Name;
-                    }
-                    parameters[i].ParameterInfo = methodParam;
-                    parameters[i].ParameterType = methodParam.ParameterType;
-                }
-            }
-            StringService.RemoveProfile(id);
-            rout.Parameters = parameters;
-            return rout;
-        }
-
-        private List<T> GetParams<T>(string input, Func<string, T> creator)
-        {
-            var outLst = new List<T>();
-            var id = StringService.AddProfile();
-            StringService.SetInputLine(id, input, x => input = x)
-                         .SetRemoveStat(id, true)
-                         .SetPattern(id, @"\[.+?\]");
-            var res = StringService.Next(id);
-            while (res.success)
-            {
-                outLst.Add(creator(res.output));
-                res = StringService.Next(id);
-            }
-            StringService.RemoveProfile(id);
-            return outLst;
+            var parameters = package.Parameter.Split(' ');
+            return Map.Query(package.Utility, package.Command, parameters);
         }
     }
 }
