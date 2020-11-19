@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Reflection;
 using System;
-namespace Shared.Models
+namespace Shared.Models.Router
 {
     public class Rout : NamedEntity
     {

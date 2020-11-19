@@ -57,7 +57,7 @@ namespace UI.MessengerUI.Configurations
                 if (property.PropertyType == typeof(Profile))
                 {
                     var profileSection = configurationSection.GetSection(property.Name);
-                    
+
                     if (profileSection.GetChildren().Count() <= 0)
                     {
                         property.SetValue(configuration, new Profile());
@@ -87,7 +87,7 @@ namespace UI.MessengerUI.Configurations
         {
             if (int.TryParse(value, out var intValue))
             {
-                if (intValue > -1 && intValue < 15)
+                if (intValue > -1 && intValue <= 15)
                 {
                     property.SetValue(instance, (ConsoleColor)intValue);
                 }

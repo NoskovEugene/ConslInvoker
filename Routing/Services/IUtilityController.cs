@@ -1,6 +1,5 @@
 using System;
-using System.Collections.Generic;
-using Shared.Models;
+using Shared.Models.Router;
 
 namespace Routing.Services
 {

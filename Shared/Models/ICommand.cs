@@ -1,4 +1,6 @@
 
+using Shared.Models.Packages;
+
 namespace Shared.Models
 {
     public interface ICommand
@@ -14,12 +16,12 @@ namespace Shared.Models
         /// </summary>
         /// <value></value>
         string Description { get; }
-        
+
         /// <summary>
         /// Запуск команды
         /// </summary>
         /// <param name="package"></param>
-        void Execute(Package package);
+        void Execute(Package<UserPackage> package);
 
     }
 }

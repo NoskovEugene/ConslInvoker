@@ -3,23 +3,20 @@ using System;
 using StructureMap;
 
 using NLog;
-using NLog.Extensions;
 using NLog.Extensions.Logging;
 
 using Core.Buses;
 using Core.Managers;
-using Core.Analyzers;
 using Core.Storage;
-using Shared.Models;
-
-using Microsoft.Extensions.Configuration;
 
 using UI.MessengerUI;
 using UI.Request;
 using Core.TypeConverter;
 using Core.CoreSettings;
-using Routing;
-using Routing.Services;
+
+using Shared.Models;
+
+using Microsoft.Extensions.Configuration;
 
 namespace Core
 {
@@ -43,7 +40,7 @@ namespace Core
         /// <value></value>
         public ICommandManager CommandManager { get; }
 
-        
+
 
         public InvokerCore()
         {
@@ -59,15 +56,12 @@ namespace Core
                 x.For<IConfiguration>().Singleton().Add(Configuration);
                 x.For<Container>().Singleton().Add(Services);
                 x.For<ICommandManager>().Singleton().Use<CommandManager>();
-                x.For<IAnalyzerManager>().Singleton().Use<AnalyzerManager>();
                 x.For<IAppStorage>().Singleton().Use<AppStorage>();
                 x.For<ICommandBus>().Use<CommandBus>();
                 x.AddRouting();
             });
             Services.GetInstance<ITypeMapperFactory>().Configure(new TypeConverterDefaultProfile());
             CommandManager = Services.GetInstance<ICommandManager>();
-            var analyzermanager = Services.GetInstance<IAnalyzerManager>();
-            analyzermanager.AddAnalyzer<Analyzer>();
         }
 
         protected void InitLoggers()
@@ -75,7 +69,6 @@ namespace Core
             LogManager.Configuration = new NLogLoggingConfiguration(Configuration.GetSection("NLog"));
             MessengerManager.SetConfiguration(Configuration);
             RequesterManager.SetConfiguration(Configuration);
-            
         }
 
         protected IConfiguration CreateConfiguration()

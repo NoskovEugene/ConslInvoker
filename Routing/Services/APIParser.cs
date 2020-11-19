@@ -6,6 +6,7 @@ using Routing.Extensions;
 using Shared.Attributes;
 using Shared.Extensions;
 using Shared.Models;
+using Shared.Models.Router;
 
 namespace Routing.Services
 {
@@ -29,7 +30,7 @@ namespace Routing.Services
                     Name = utilityAttribute.UtilityName,
                 };
 
-                if (parserAttribute != null)
+                if (parserAttribute != null && typeof(IParser).IsAssignableFrom(parserAttribute.Parser))
                 {
                     utility.ParserExists = true;
                     utility.ParserType = parserAttribute.Parser;
@@ -121,6 +122,5 @@ namespace Routing.Services
             StringService.RemoveProfile(id);
             return outLst;
         }
-
     }
 }

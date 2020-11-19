@@ -3,6 +3,8 @@ using System.Linq;
 using System.Collections.Generic;
 using Routing.Services;
 using Shared.Models;
+using Shared.Models.Router;
+using Shared.Models.Packages;
 
 namespace Routing.Services
 {
@@ -23,18 +25,14 @@ namespace Routing.Services
             return this;
         }
 
-        public NeedRout Query(string utility, string command, string[] parameters)
+        public NeedRout Query(Package<UserPackage> package)
         {
-            if (UtilityController.Match(utility).Success)
+            if (UtilityController.Match(package.PayLoad.Utility).Success)
             {
                 var needUtility = UtilityController.Next();
-                var rout = needUtility.Routs.Where(x =>
-                    x.Name == command &&
-                    x.Parameters.Count() == parameters.Length).FirstOrDefault();
                 return new NeedRout
                 {
-                    Utility = needUtility,
-                    Rout = rout
+                    Utility = needUtility
                 };
             }
             else

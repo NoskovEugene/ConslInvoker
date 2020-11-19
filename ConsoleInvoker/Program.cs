@@ -13,6 +13,7 @@ using Shared.Attributes;
 using StructureMap;
 using System.Collections.Generic;
 using UI.MessengerUI;
+using Shared.Models.Router;
 
 namespace ConsoleInvoker
 {
@@ -26,7 +27,6 @@ namespace ConsoleInvoker
             core.CommandManager.RegistryCommandUseAttribute<RequesterTestCommand>();
             core.CommandManager.RegistryCommandUseAttribute<SetToStorageItemCommand>();
             core.CommandManager.RegistryCommandUseAttribute<GetFromStorageCommand>();
-
             var router = core.Services.GetInstance<Router>();
             router.AddApi<ToDoApi>();
             var pckg = new Package() { Utility = "todo", Command = "add", Parameter = "hello world" };
@@ -43,7 +43,7 @@ namespace ConsoleInvoker
     }
 
     [Utility(UtilityName = "todo")]
-    [Parser(typeof(Parser))]
+    [Parser(typeof(Program))]
     public class ToDoApi
     {
 
@@ -57,22 +57,28 @@ namespace ConsoleInvoker
         [Rout(CommandName = "add", Parameters = "[Start datetime] [ToDoType]")]
         public void AddToDo(string startDateTime, int toDoType)
         {
-            Messenger.Info("Hello world");
+            Messenger.Info(startDateTime);
+            Messenger.Info(toDoType.ToString());
         }
 
         [Rout(CommandName = "add", Parameters = "[Start datetime] [ToDoType] {[Sunday] [Monday] [Tuesday] [Wednesday] [Thursday] [Friday] [Saturday]}")]
         public void AddToDo(string startDateTime, int toDoType, params int[] dayOfWeek)
         {
-
+            Messenger.Info(startDateTime);
+            Messenger.Info(toDoType.ToString());
+            foreach (var item in dayOfWeek)
+            {
+                Messenger.Info(item.ToString());
+            }
         }
     }
 
     public class Parser : IParser
     {
         public Dictionary<string, object> Parameters { get; private set; }
-        public bool Success { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string ExceptionMessage { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public Exception Exception { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public bool Success { get; set; }
+        public string ExceptionMessage { get; set; }
+        public Exception Exception { get; set; }
 
         public Dictionary<string, Func<string, object>> rules = new Dictionary<string, Func<string, object>>();
 

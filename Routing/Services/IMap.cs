@@ -1,5 +1,7 @@
 using System;
 using Shared.Models;
+using Shared.Models.Packages;
+using Shared.Models.Router;
 
 namespace Routing.Services
 {
@@ -19,7 +21,7 @@ namespace Routing.Services
         /// <param name="command">Command Name</param>
         /// <param name="parameters">Parameters</param>
         /// <returns></returns>
-        NeedRout Query(string utility, string command, string[] parameters);
+        NeedRout Query(Package<UserPackage> package);
 
         /// <summary>
         /// Setup utility instanse from container

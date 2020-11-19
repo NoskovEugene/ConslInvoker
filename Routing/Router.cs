@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using StructureMap;
 
 using Routing.Services;
+using Shared.Models.Router;
 using Shared.Models;
+using Shared.Models.Packages;
 
 namespace Routing
 {
@@ -48,9 +50,9 @@ namespace Routing
             }
         }
 
-        public NeedRout GetRout(Package package)
+        public NeedRout GetRout(Package<UserPackage> package)
         {
-            var needRout = Map.Query(package.Utility, package.Command, package.SplitedParams);
+            var needRout = Map.Query(package);
             if (needRout.Utility.UtilityInstanse == null)
             {
                 var instanse = Services.GetInstance(needRout.Utility.UtilityType, needRout.Utility.Name);

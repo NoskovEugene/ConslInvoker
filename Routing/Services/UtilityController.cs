@@ -3,6 +3,7 @@ using System.Xml.Linq;
 using System.Linq;
 using System.Collections.Generic;
 using Shared.Models;
+using Shared.Models.Router;
 
 namespace Routing.Services
 {
