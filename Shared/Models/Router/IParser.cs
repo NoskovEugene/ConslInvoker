@@ -12,7 +12,7 @@ namespace Shared.Models.Router
 		/// </summary>
 		/// <param name="package"></param>
 		/// <param name="rout"></param>
-        void Parse(Package<UserPackage> package, NeedRout rout);
+        void Parse(UserPackage package, NeedRout rout);
 
 		/// <summary>
 		///	parsed parameters

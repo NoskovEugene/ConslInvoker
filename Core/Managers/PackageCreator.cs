@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.CompilerServices;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System;
@@ -6,10 +8,13 @@ using System.Linq;
 
 using Shared.Models.Packages;
 using UI.MessengerUI;
+using Shared.Extensions;
 
 namespace Core.Managers
 {
-    public class PackageCreator
+
+
+    public class PackageCreator : IPackageCreator
     {
 
         public Dictionary<string, Func<string, Action<string>, string>> RuleSet { get; set; }
@@ -21,26 +26,38 @@ namespace Core.Managers
             Messenger = messenger;
         }
 
-
-
-
-
-        public Package<UserPackage> CreateUserPackage(string line)
+        public Package Parse(Package package)
         {
-            var array = line.Split(' ');
-            var payLoad = new UserPackage();
-            var command = array.First();
-            line = line.Replace(command, string.Empty);
-            if (!command.Contains(":"))
+            package = package.Swap();
+
+            if (package.TryGetPayload<UserPackage>(out var output))
             {
-                Messenger.Error("Utility cannot be empty");
+                var line = output.InputLine;
+                var arr = line.Split(' ');
+                var command = arr.First();
+                if (!command.Contains(":"))
+                {
+                    return Bad(package, "Входящая строка не имеет утилиты");
+                }
+                var commandArr = command.Split(':');
+                output.Util = commandArr.First();
+                output.Command = commandArr.Last();
+                arr = arr.Where(x => x != command).ToArray();
+                output.UnparserParams = string.Join(" ", arr).Trim();
+                output.SplitedParams = arr;
+                return output;
             }
-            var utility = command.Split(':')[0];
-            command = command.Replace(utility, string.Empty);
-            payLoad.Utility = utility;
-            payLoad.Command = command;
-            array = array.Where(x => x != array.First()).ToArray();
-            payLoad.Parameters = array;
+            else
+            {
+                return Bad(package, "Пакет имеет неверный тип");
+            }
+        }
+
+        public Package Bad(Package package, string message)
+        {
+            var messagePack = (MessagePackage)package;
+            messagePack.Message = message;
+            return messagePack;
         }
 
 

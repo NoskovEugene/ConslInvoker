@@ -25,9 +25,9 @@ namespace Routing.Services
             return this;
         }
 
-        public NeedRout Query(Package<UserPackage> package)
+        public NeedRout Query(UserPackage package)
         {
-            if (UtilityController.Match(package.PayLoad.Utility).Success)
+            if (UtilityController.Match(package.Util).Success)
             {
                 var needUtility = UtilityController.Next();
                 return new NeedRout

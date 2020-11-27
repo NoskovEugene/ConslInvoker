@@ -17,6 +17,10 @@ namespace Routing.Services
 
         protected IStringService StringService { get; set; } = new StringService();
 
+		public APIParser(IStringService stringService){
+			this.StringService = stringService;
+		}
+
         public Utility GetApiMap<T>()
         {
             var type = typeof(T);

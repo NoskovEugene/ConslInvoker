@@ -21,7 +21,7 @@ namespace Routing.Services
         /// <param name="command">Command Name</param>
         /// <param name="parameters">Parameters</param>
         /// <returns></returns>
-        NeedRout Query(Package<UserPackage> package);
+        NeedRout Query(UserPackage package);
 
         /// <summary>
         /// Setup utility instanse from container

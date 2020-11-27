@@ -15,11 +15,13 @@ namespace Routing
 
         protected APIParser APIParser { get; set; }
 
+        protected IStringService StringService { get; set; }
+
         protected Container Services { get; set; }
 
         protected IMap Map { get; set; }
 
-        public Router(Container services)
+        public Router(Container services, IStringService stringService)
         {
             this.Services = services;
             Init();
@@ -27,7 +29,7 @@ namespace Routing
 
         private void Init()
         {
-            APIParser = new APIParser();
+            APIParser = new APIParser(StringService);
             Map = new Map();
         }
 
@@ -50,9 +52,14 @@ namespace Routing
             }
         }
 
-        public NeedRout GetRout(Package<UserPackage> package)
+        public NeedRout GetRout(Package package)
         {
-            var needRout = Map.Query(package);
+            if (package.PackageType != PackageTypeEnum.UserPackage)
+            {
+                return null;
+            }
+            var pckg = (UserPackage)package;
+            var needRout = Map.Query(pckg);
             if (needRout.Utility.UtilityInstanse == null)
             {
                 var instanse = Services.GetInstance(needRout.Utility.UtilityType, needRout.Utility.Name);

@@ -7,6 +7,6 @@ namespace Routing
     public interface IRouter
     {
         void AddApi<T>();
-        NeedRout GetRout(Package<UserPackage> package);
+        NeedRout GetRout(Package package);
     }
 }

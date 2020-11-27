@@ -21,7 +21,7 @@ namespace Shared.Models
         /// Запуск команды
         /// </summary>
         /// <param name="package"></param>
-        void Execute(Package<UserPackage> package);
+        void Execute(Package package);
 
     }
 }
