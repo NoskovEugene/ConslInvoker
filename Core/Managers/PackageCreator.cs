@@ -9,6 +9,7 @@ using System.Linq;
 using Shared.Models.Packages;
 using UI.MessengerUI;
 using Shared.Extensions;
+using Core.Buses;
 
 namespace Core.Managers
 {
@@ -43,7 +44,7 @@ namespace Core.Managers
                 output.Util = commandArr.First();
                 output.Command = commandArr.Last();
                 arr = arr.Where(x => x != command).ToArray();
-                output.UnparserParams = string.Join(" ", arr).Trim();
+                output.UnparsedParameters = string.Join(" ", arr).Trim();
                 output.SplitedParams = arr;
                 return output;
             }
@@ -55,7 +56,7 @@ namespace Core.Managers
 
         public Package Bad(Package package, string message)
         {
-            var messagePack = (MessagePackage)package;
+            var messagePack = new ExceptionPackage().Prepare<PackageCreator, MainExecutor, ExceptionPackage>();
             messagePack.Message = message;
             return messagePack;
         }

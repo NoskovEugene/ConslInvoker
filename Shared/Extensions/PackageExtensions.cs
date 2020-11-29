@@ -1,4 +1,3 @@
-using System.Runtime.Serialization;
 using System;
 using System.Reflection;
 using Shared.Attributes;
@@ -24,16 +23,28 @@ namespace Shared.Extensions
             }
         }
 
-		public static Package Swap(this Package package)
-		{
-			var fromGlass = package.From;
-			var fromTypeGlass = package.FromType;
-			package.From = package.To;
-			package.FromType = package.ToType;
-			package.To = fromGlass;
-			package.ToType = fromTypeGlass;
-			return package;
-		}
+        public static PackageType Prepare<TFrom, TTo, PackageType>(this PackageType package)
+            where PackageType : Package
+        {
+            var typeFrom = typeof(TFrom);
+            var typeTo = typeof(TTo);
+            package.FromType = typeFrom;
+            package.ToType = typeTo;
+            package.From = typeFrom.Name;
+            package.To = typeTo.Name;
+            return package;
+        }
+
+        public static Package Swap(this Package package)
+        {
+            var fromGlass = package.From;
+            var fromTypeGlass = package.FromType;
+            package.From = package.To;
+            package.FromType = package.ToType;
+            package.To = fromGlass;
+            package.ToType = fromTypeGlass;
+            return package;
+        }
 
         private static PackageTypeEnum? GetPackageEnum(Type type)
         {

@@ -1,19 +1,18 @@
 ﻿using Microsoft.VisualBasic.CompilerServices;
 using System;
+using System.Reflection;
 
 using Core;
-
-using Infrastructure.Commands;
-
-using Shared.Models;
+using Core.Buses;
 
 using Routing;
-using System.Reflection;
 using Shared.Attributes;
-using StructureMap;
 using System.Collections.Generic;
 using UI.MessengerUI;
 using Shared.Models.Router;
+using Shared.Models.Packages;
+using Core.Managers;
+using Core.Extensions.StructureMapExtensions;
 
 namespace ConsoleInvoker
 {
@@ -21,26 +20,26 @@ namespace ConsoleInvoker
     {
         static void Main(string[] args)
         {
-            var core = new InvokerCore();
-            core.CommandManager.RegistryCommandUseAttribute<QuitCommand>();
-            core.CommandManager.RegistryCommandUseAttribute<MessengerTestCommand>();
-            core.CommandManager.RegistryCommandUseAttribute<RequesterTestCommand>();
-            core.CommandManager.RegistryCommandUseAttribute<SetToStorageItemCommand>();
-            core.CommandManager.RegistryCommandUseAttribute<GetFromStorageCommand>();
-            var router = core.Services.GetInstance<Router>();
-            router.AddApi<ToDoApi>();
-            var pckg = new Package() { Utility = "todo", Command = "add", Parameter = "hello world" };
-            pckg.SplitedParams = pckg.Parameter.Split(' ');
-            var rout = router.GetRout(pckg);
-            if (rout.Utility.ParserExists)
-            {
-                IParser parser = (IParser)rout.Utility.ParserInstanse;
-                parser.Parse(pckg, rout);
-                pckg.ParsedParameter = parser.Parameters;
-            }
+			var core = new InvokerCore();
+			core.Services.ConfigureOption<AppConfig>(core.Configuration.GetSection("AppConfig"));
+			var option = core.Services.GetInstance<IOption<AppConfig>>();
             Console.ReadKey();
         }
     }
+
+
+
+	public class AppConfig
+	{
+		public string A {get;set;}
+
+		public string ConnectionString {get;set;}
+	}
+
+
+
+
+
 
     [Utility(UtilityName = "todo")]
     [Parser(typeof(Program))]
@@ -90,7 +89,7 @@ namespace ConsoleInvoker
             Parameters = new Dictionary<string, object>();
         }
 
-        public void Parse(Package package, NeedRout rout)
+        public void Parse(UserPackage package, NeedRout rout)
         {
             var parameters = package.SplitedParams;
             for (int i = 0; i < parameters.Length; i++)

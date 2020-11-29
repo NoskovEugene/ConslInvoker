@@ -1,6 +1,4 @@
-
 using Shared.Models.Packages;
-
 namespace Shared.Models
 {
     public interface ICommand
